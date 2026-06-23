@@ -7,7 +7,11 @@ Dado que el input son clips de 5s a 10 FPS, cada clip genera 50 imágenes. Para 
 *   **Muestreo Estratégico:** Extracción de frames clave. En producción, se recomienda un *stride* de muestreo dinámico basado en el movimiento detectado para asegurar que cada imagen aporte información nueva al gradiente.
 
 ## 3.2. Estructuración del Formato OBB
-El formato de entrada proporcionado ($cx, cy, w, h, \text{angle\_deg}$) debe mapearse al formato esperado por el motor de entrenamiento (formato de 4 puntos o formato normalizado).
+El formato de entrada proporcionado
+
+$cx, cy, w, h, \text{angle-deg}$
+
+debe mapearse al formato esperado por el motor de entrenamiento (formato de 4 puntos o formato normalizado).
 
 **Conversión Técnica:**
 
