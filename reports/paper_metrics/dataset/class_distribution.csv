@@ -1,0 +1,10 @@
+class_id,class_name,objects,percentage
+1,car,2610,80.5556
+2,van,57,1.7593
+3,microbus,19,0.5864
+4,minibus,94,2.9012
+5,bus,14,0.4321
+6,articulated_bus,3,0.0926
+7,truck,163,5.0309
+8,mototaxi,33,1.0185
+9,motorcycle,247,7.6235
