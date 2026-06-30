@@ -1,0 +1,52 @@
+{
+  "images_in_csv": 300,
+  "images_on_disk": 300,
+  "missing_images": 0,
+  "unique_clips": 300,
+  "empty_frames": 17,
+  "annotated_frames": 283,
+  "total_objects": 3240,
+  "objects_per_image": {
+    "min": 0,
+    "max": 51,
+    "mean": 10.8,
+    "median": 7.0
+  },
+  "box_width_px": {
+    "min": 4.0,
+    "max": 378.67,
+    "mean": 71.05121604938272,
+    "median": 80.1
+  },
+  "box_height_px": {
+    "min": 6.9,
+    "max": 324.7,
+    "mean": 48.23970987654321,
+    "median": 37.364999999999995
+  },
+  "box_area_px": {
+    "min": 87.232,
+    "max": 21326.296000000002,
+    "mean": 3048.0047354012345,
+    "median": 3040.88475
+  },
+  "angle_deg": {
+    "min": 0.0,
+    "max": 359.9,
+    "mean": 70.14696555555555,
+    "median": 0.0
+  },
+  "out_of_bounds_objects": 0,
+  "image_dimensions": [
+    {
+      "width": 1920,
+      "height": 1080,
+      "images": 300
+    }
+  ],
+  "notes_for_paper": [
+    "Splits are generated at clip level to reduce frame leakage between train and validation.",
+    "Class imbalance should be reported because Macro AP penalizes rare-class failures.",
+    "Sample sizes larger than available data are capped and marked in split manifests."
+  ]
+}
