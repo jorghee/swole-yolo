@@ -1,2 +1,0 @@
-requested_train_size,available_subset_size,train_images,val_images,epochs,parameters,model_size_mb,total_train_seconds_cpu,seconds_per_epoch_cpu,latency_ms_per_image_cpu,fps_cpu,peak_ram_mb,precision_obb_iou50,recall_obb_iou50,f1_obb_iou50,macro_ap50_obb
-300,300,240,60,1,570232,2.196671485900879,2.3252894050019677,2.3252894050019677,17.15964375034673,58.27626811773373,854.921875,0.0,0.0,0.0,0.0
