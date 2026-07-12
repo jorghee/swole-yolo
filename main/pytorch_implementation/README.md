@@ -33,14 +33,14 @@ Run a quick smoke test:
 
 ```bash
 conda activate myenv
-python main/edge_detection_experiment.py --train-sizes 300 --epochs 1 --max-train-batches 1 --benchmark-batches 1
+python main/pytorch_implementation/edge_detection_experiment.py --dataset-sizes 1000 --epochs 1 --max-train-batches 1 --benchmark-batches 1
 ```
 
 Run the paper experiments:
 
 ```bash
 conda activate myenv
-python main/edge_detection_experiment.py --train-sizes 300 1000 3000 --epochs 8
+python main/pytorch_implementation/edge_detection_experiment.py --dataset-sizes 1000 1500 2000 2500 3000 --epochs 8
 ```
 
 Outputs:
@@ -53,13 +53,13 @@ Outputs:
 
 The experiment summary contains the main paper table:
 
-- training subset size
-- train/validation image counts
+- dataset size and train/validation/test image counts
 - CPU training time
 - CPU latency and FPS
 - peak RAM
 - model size and parameter count
-- precision, recall, F1, and Macro AP50 with oriented IoU
+- held-out test precision, recall, F1, mean matched IoU, and Macro AP50 with oriented IoU
+- learning curves, per-class AP charts, and a cross-dataset metric chart
 
 ## Recommended paper framing
 
@@ -69,10 +69,9 @@ paper:
 1. Real urban-intersection vehicle data from Peru.
 2. Oriented bounding-box annotation analysis.
 3. Lightweight CNN baseline for 9-class vehicle detection.
-4. Accuracy/compute trade-off across 300, 1000, and 3000 training images.
+4. Accuracy/compute trade-off across 1,000, 1,500, 2,000, 2,500, and 3,000 images.
 5. CPU evidence that motivates future Raspberry Pi deployment.
 
-If the local repository only contains 300 images, the scripts still generate
-the 1000/3000 manifests and results, but mark the available subset size as 300.
-When larger subsets are added, rerun the same commands without changing the
-paper pipeline.
+Each experiment uses its matching `data/dataset_<size>/` directory and keeps
+entire clips in exactly one split. This prevents adjacent video frames leaking
+between training, validation, and held-out testing.
