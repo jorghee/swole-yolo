@@ -1,0 +1,11 @@
+{
+  "car": 0.05963246927102349,
+  "van": 0.25,
+  "microbus": 0.0,
+  "minibus": 0.01676899716115402,
+  "bus": 0.0,
+  "articulated_bus": 0.0,
+  "truck": 0.0,
+  "mototaxi": 0.09090909090909091,
+  "motorcycle": 0.0
+}
