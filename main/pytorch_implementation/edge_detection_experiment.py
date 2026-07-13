@@ -7,8 +7,12 @@ different subset sizes, then exports paper-ready metrics:
 
 - train/validation loss
 - oriented-box AP50 proxy per class and macro AP50
+- mAP @ [0.5 : 0.95] (COCO standard, 10 IoU thresholds)
 - precision/recall/F1 at IoU 0.50
-- CPU latency, FPS, model parameters, model size
+- mean angular error (MAE) for matched detections
+- confusion matrix for classification error analysis
+- CPU latency (mean and P99), FPS, model parameters, model size
+- GFLOPs (theoretical computational cost)
 - per-experiment CSV/JSON summaries
 
 The model is intentionally compact to support the low-resource-device framing.
@@ -490,6 +494,12 @@ def oriented_iou(a: dict[str, float], b: dict[str, float]) -> float:
     return inter_area / union if union > 0 else 0.0
 
 
+def angular_difference(angle_a: float, angle_b: float) -> float:
+    """Minimum absolute angular difference in degrees, handling the 0/360 wrap."""
+    diff = abs(angle_a - angle_b) % 360.0
+    return min(diff, 360.0 - diff)
+
+
 def average_precision(matches: list[int], scores: list[float], total_gt: int) -> float:
     if total_gt == 0:
         return float("nan")
@@ -513,8 +523,14 @@ def average_precision(matches: list[int], scores: list[float], total_gt: int) ->
     return ap
 
 
-def evaluate(model, loader, device, args, conf_threshold: float | None = None, nms_threshold: float | None = None):
-    """Evaluate detections at explicitly supplied post-processing thresholds."""
+def evaluate(model, loader, device, args, conf_threshold: float | None = None, nms_threshold: float | None = None, iou_threshold: float = 0.5):
+    """Evaluate detections at explicitly supplied post-processing and IoU thresholds.
+
+    The *iou_threshold* parameter controls when a detection counts as a true
+    positive.  Setting it to 0.50 reproduces the original AP50 behaviour;
+    ``evaluate_coco`` calls this function at ten thresholds from 0.50 to 0.95
+    to compute the COCO-standard mAP@[.5:.95].
+    """
     model.eval()
     conf_threshold = args.conf_threshold if conf_threshold is None else conf_threshold
     nms_threshold = args.nms_threshold if nms_threshold is None else nms_threshold
@@ -525,6 +541,12 @@ def evaluate(model, loader, device, args, conf_threshold: float | None = None, n
     total_fp = 0
     total_fn = 0
     matched_ious: list[float] = []
+    matched_angular_errors: list[float] = []
+    # Confusion matrix: confusion[gt_class][pred_class] counts misclassifications
+    # among detections that overlap a ground-truth box above the IoU threshold
+    # but predict the wrong class.  Pure false positives (no GT overlap) are not
+    # counted here because they lack a meaningful GT class.
+    confusion: dict[int, dict[int, int]] = defaultdict(lambda: defaultdict(int))
 
     with torch.no_grad():
         for images, _, metas in loader:
@@ -548,13 +570,26 @@ def evaluate(model, loader, device, args, conf_threshold: float | None = None, n
                         if iou > best_iou:
                             best_iou = iou
                             best_idx = idx
-                    is_match = best_iou >= 0.5 and best_idx >= 0
+                    is_match = best_iou >= iou_threshold and best_idx >= 0
                     if is_match:
                         matched_by_class[cls].add(best_idx)
                         total_tp += 1
                         matched_ious.append(best_iou)
+                        # Angular error between prediction and matched GT.
+                        gt_box = gt_by_class[cls][best_idx]
+                        matched_angular_errors.append(angular_difference(det["angle"], gt_box["angle"]))
+                        confusion[cls][cls] += 1
                     else:
                         total_fp += 1
+                        # Check if this FP overlaps a GT of a *different* class
+                        # above the IoU threshold (classification error).
+                        for other_cls, other_gts in gt_by_class.items():
+                            if other_cls == cls:
+                                continue
+                            for gt in other_gts:
+                                if oriented_iou(det, gt) >= iou_threshold:
+                                    confusion[other_cls][cls] += 1
+                                    break  # count once per detection
                     per_class_scores[cls].append(det["score"])
                     per_class_matches[cls].append(int(is_match))
 
@@ -572,17 +607,52 @@ def evaluate(model, loader, device, args, conf_threshold: float | None = None, n
     precision = total_tp / max(total_tp + total_fp, 1)
     recall = total_tp / max(total_tp + total_fn, 1)
     f1 = 2 * precision * recall / max(precision + recall, 1e-12)
+    mae_angular = sum(matched_angular_errors) / max(len(matched_angular_errors), 1)
+
+    # Build a serialisable confusion matrix keyed by class name.
+    confusion_matrix: dict[str, dict[str, int]] = {}
+    all_cls_ids = sorted(set(list(confusion.keys()) + [c for row in confusion.values() for c in row]))
+    for gt_cls in all_cls_ids:
+        row_name = CLASS_NAMES.get(gt_cls, f"class_{gt_cls}")
+        confusion_matrix[row_name] = {
+            CLASS_NAMES.get(pred_cls, f"class_{pred_cls}"): confusion[gt_cls][pred_cls]
+            for pred_cls in all_cls_ids
+            if confusion[gt_cls][pred_cls] > 0
+        }
+
     return {
         "precision_obb_iou50": precision,
         "recall_obb_iou50": recall,
         "f1_obb_iou50": f1,
         "macro_ap50_obb": sum(valid_ap) / max(len(valid_ap), 1),
         "mean_matched_iou_obb": sum(matched_ious) / max(len(matched_ious), 1),
+        "mae_angular_deg": mae_angular,
         "per_class_ap50_obb": {CLASS_NAMES[cls]: per_class_ap[cls] for cls in sorted(CLASS_NAMES)},
+        "confusion_matrix": confusion_matrix,
         "tp": total_tp,
         "fp": total_fp,
         "fn": total_fn,
     }
+
+
+def evaluate_coco(model, loader, device, args, conf_threshold: float | None = None, nms_threshold: float | None = None) -> dict:
+    """Compute mAP @ [0.5 : 0.95] (COCO standard) using 10 IoU thresholds.
+
+    Returns the full IoU-0.50 evaluation dict augmented with the
+    COCO-standard ``mAP_50_95_obb`` field and the per-threshold AP values.
+    """
+    iou_thresholds = [0.50 + 0.05 * i for i in range(10)]  # 0.50, 0.55, ..., 0.95
+    per_threshold_map: dict[str, float] = {}
+    for iou_thresh in iou_thresholds:
+        result_at_thresh = evaluate(model, loader, device, args, conf_threshold, nms_threshold, iou_threshold=iou_thresh)
+        per_threshold_map[f"mAP_iou_{iou_thresh:.2f}"] = result_at_thresh["macro_ap50_obb"]
+
+    # The primary evaluation at IoU 0.50 provides the detailed breakdown.
+    base_result = evaluate(model, loader, device, args, conf_threshold, nms_threshold, iou_threshold=0.5)
+    valid_maps = [v for v in per_threshold_map.values() if not math.isnan(v)]
+    base_result["mAP_50_95_obb"] = sum(valid_maps) / max(len(valid_maps), 1)
+    base_result["per_iou_threshold_mAP"] = per_threshold_map
+    return base_result
 
 
 def calibrate_postprocess(model, loader, device, args) -> tuple[float, float, dict]:
@@ -590,7 +660,7 @@ def calibrate_postprocess(model, loader, device, args) -> tuple[float, float, di
     candidates = []
     for confidence in (0.20, 0.30, 0.40, 0.50, 0.60):
         for nms_iou in (0.30, 0.45, 0.60):
-            metrics = evaluate(model, loader, device, args, confidence, nms_iou)
+            metrics = evaluate(model, loader, device, args, confidence, nms_iou, iou_threshold=0.5)
             candidates.append((metrics["f1_obb_iou50"], metrics["macro_ap50_obb"], confidence, nms_iou, metrics))
     # F1 is primary because the observed failure is excessive false positives;
     # AP breaks ties so that ranking quality is still favoured.
@@ -600,7 +670,7 @@ def calibrate_postprocess(model, loader, device, args) -> tuple[float, float, di
 
 def benchmark_inference(model, loader, device, args, conf_threshold: float | None = None, nms_threshold: float | None = None):
     model.eval()
-    times = []
+    per_image_times: list[float] = []
     images_seen = 0
     with torch.no_grad():
         for batch_idx, (images, _, metas) in enumerate(loader, start=1):
@@ -615,14 +685,43 @@ def benchmark_inference(model, loader, device, args, conf_threshold: float | Non
                 args.nms_threshold if nms_threshold is None else nms_threshold,
             )
             elapsed = time.perf_counter() - start
-            times.append(elapsed / images.size(0))
+            per_image_times.append(elapsed / images.size(0))
             images_seen += images.size(0)
-    mean_latency = sum(times) / max(len(times), 1)
-    return {"latency_ms_per_image_cpu": mean_latency * 1000, "fps_cpu": 1 / mean_latency if mean_latency > 0 else 0, "benchmark_images": images_seen}
+    mean_latency = sum(per_image_times) / max(len(per_image_times), 1)
+    # P99 latency: the 99th-percentile per-image time.  With few batches the
+    # quantile falls back gracefully to the maximum observed value.
+    if len(per_image_times) >= 2:
+        p99_latency = sorted(per_image_times)[max(0, math.ceil(len(per_image_times) * 0.99) - 1)]
+    else:
+        p99_latency = mean_latency
+    return {
+        "latency_ms_per_image_cpu": mean_latency * 1000,
+        "latency_p99_ms_per_image_cpu": p99_latency * 1000,
+        "fps_cpu": 1 / mean_latency if mean_latency > 0 else 0,
+        "benchmark_images": images_seen,
+    }
 
 
 def parameter_count(model) -> int:
     return sum(p.numel() for p in model.parameters())
+
+
+def compute_gflops(model, img_size: int, device: torch.device) -> float | None:
+    """Estimate GFLOPs for a single forward pass using ``thop``.
+
+    Returns ``None`` if ``thop`` is not installed so that the rest of the
+    pipeline can proceed without a hard dependency.
+    """
+    try:
+        from thop import profile  # type: ignore[import-untyped]
+    except ImportError:
+        print("WARNING: 'thop' is not installed; GFLOPs will not be reported. "
+              "Install with: pip install thop")
+        return None
+    dummy_input = torch.randn(1, 3, img_size, img_size, device=device)
+    model.eval()
+    flops, _ = profile(model, inputs=(dummy_input,), verbose=False)
+    return flops / 1e9  # Convert FLOPs to GFLOPs
 
 
 def write_json(path: Path, data: dict) -> None:
@@ -746,8 +845,10 @@ def experiment(args, rows, dataset_size, device, output_dir):
     checkpoint_path = output_dir / f"model_dataset_{dataset_size}.pt"
     torch.save(model.state_dict(), checkpoint_path)
     model_size_mb = checkpoint_path.stat().st_size / (1024 * 1024)
+    gflops = compute_gflops(model, args.img_size, device)
     calibrated_confidence, calibrated_nms, validation_evaluation = calibrate_postprocess(model, val_loader, device, args)
-    evaluation = evaluate(model, test_loader, device, args, calibrated_confidence, calibrated_nms)
+    # COCO-standard mAP@[0.5:0.95] on held-out test data.
+    evaluation = evaluate_coco(model, test_loader, device, args, calibrated_confidence, calibrated_nms)
     inference = benchmark_inference(model, test_loader, device, args, calibrated_confidence, calibrated_nms)
     peak_ram_mb = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024
 
@@ -763,6 +864,7 @@ def experiment(args, rows, dataset_size, device, output_dir):
         "img_size": args.img_size,
         "strides": args.strides,
         "parameters": parameter_count(model),
+        "gflops": gflops,
         "model_size_mb": model_size_mb,
         "total_train_seconds_cpu": total_train_seconds,
         "seconds_per_epoch_cpu": total_train_seconds / max(len(history), 1),
@@ -775,14 +877,15 @@ def experiment(args, rows, dataset_size, device, output_dir):
         "pos_weight": args.pos_weight,
         "focal_gamma": args.focal_gamma,
         "class_weights": loss_config["class_weights"],
-        **{f"val_{key}": value for key, value in validation_evaluation.items() if key != "per_class_ap50_obb"},
-        **evaluation,
+        **{f"val_{key}": value for key, value in validation_evaluation.items() if key not in ("per_class_ap50_obb", "confusion_matrix")},
+        **{key: value for key, value in evaluation.items() if key not in ("confusion_matrix",)},
         **inference,
         "checkpoint": str(checkpoint_path),
     }
     write_json(output_dir / f"result_dataset_{dataset_size}.json", result)
     write_json(output_dir / f"history_dataset_{dataset_size}.json", {"history": history})
     write_json(output_dir / f"per_class_ap50_dataset_{dataset_size}.json", evaluation["per_class_ap50_obb"])
+    write_json(output_dir / f"confusion_matrix_dataset_{dataset_size}.json", evaluation["confusion_matrix"])
     plot_history(output_dir, dataset_size, history)
     plot_per_class_ap(output_dir, dataset_size, evaluation["per_class_ap50_obb"])
     return result
@@ -798,38 +901,48 @@ def write_paper_summary(output_dir: Path, results: list[dict]) -> None:
         "epochs_requested",
         "epochs_completed",
         "parameters",
+        "gflops",
         "model_size_mb",
         "total_train_seconds_cpu",
         "seconds_per_epoch_cpu",
         "latency_ms_per_image_cpu",
+        "latency_p99_ms_per_image_cpu",
         "fps_cpu",
         "peak_ram_mb",
         "precision_obb_iou50",
         "recall_obb_iou50",
         "f1_obb_iou50",
         "macro_ap50_obb",
+        "mAP_50_95_obb",
         "mean_matched_iou_obb",
+        "mae_angular_deg",
     ]
     write_csv(output_dir / "experiment_summary.csv", results, fields)
 
+    gflops_header = "GFLOPs" if any(row.get("gflops") is not None for row in results) else ""
     lines = [
         "# Experiment summary for paper",
         "",
-        "| Dataset | Images | Train | Val | Test | Test Macro AP50 OBB | Test F1 OBB | Latency ms/img CPU | FPS CPU | Train seconds | Model MB |",
-        "| ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+        f"| Dataset | Images | Train | Val | Test | AP50 | mAP[.5:.95] | F1 | MAE° | Latency ms | P99 ms | FPS | {gflops_header + ' | ' if gflops_header else ''}Model MB |",
+        f"| ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | {('---: | ' if gflops_header else '')}---: |",
     ]
     for row in results:
+        gflops_val = f"{row['gflops']:.2f} | " if row.get("gflops") is not None else ("— | " if gflops_header else "")
         lines.append(
             "| "
             f"{row['dataset_size']} | {row['available_images']} | {row['train_images']} | {row['val_images']} | {row['test_images']} | "
-            f"{row['macro_ap50_obb']:.4f} | {row['f1_obb_iou50']:.4f} | {row['latency_ms_per_image_cpu']:.2f} | "
-            f"{row['fps_cpu']:.2f} | {row['total_train_seconds_cpu']:.1f} | {row['model_size_mb']:.2f} |"
+            f"{row['macro_ap50_obb']:.4f} | {row.get('mAP_50_95_obb', 0):.4f} | {row['f1_obb_iou50']:.4f} | "
+            f"{row.get('mae_angular_deg', 0):.2f} | {row['latency_ms_per_image_cpu']:.2f} | "
+            f"{row.get('latency_p99_ms_per_image_cpu', 0):.2f} | "
+            f"{row['fps_cpu']:.2f} | {gflops_val}{row['model_size_mb']:.2f} |"
         )
     lines.extend(
         [
             "",
             "Use this table to argue the accuracy/compute trade-off for low-resource urban traffic monitoring.",
             "Scores are calculated once on held-out test clips; validation is used only for checkpoint selection.",
+            "mAP[.5:.95] follows the COCO standard (10 IoU thresholds from 0.50 to 0.95, step 0.05).",
+            "MAE° is the mean angular error in degrees for matched (TP) detections.",
         ]
     )
     (output_dir / "paper_experiment_summary.md").write_text("\n".join(lines) + "\n")
