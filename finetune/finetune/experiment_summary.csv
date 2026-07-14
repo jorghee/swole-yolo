@@ -1,0 +1,2 @@
+dataset_size,available_images,train_images,val_images,test_images,parameters,model_size_mb,total_train_seconds,test_mAP50,test_mAP50-95,test_precision,test_recall,latency_ms_per_image_cpu,fps_cpu,benchmark_threads
+2500,2500,1748,376,376,2655478,5.597720146179199,991.9520874939999,0.9394058439189126,0.8174835796289366,0.9281398384818572,0.8595321934241544,33.78075879997292,29.60265060714982,4
