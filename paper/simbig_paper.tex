@@ -1,0 +1,327 @@
+\documentclass[runningheads]{llncs}
+
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{url}
+
+\begin{document}
+
+\title{Fine-Tuning YOLO11n-OBB for Oriented Vehicle Detection in Peruvian Traffic Scenes}
+\titlerunning{YOLO11n-OBB for Peruvian Traffic Scenes}
+
+% Replace these fields with the final author information before camera-ready submission.
+\author{Anonymous Author(s)}
+\authorrunning{Anonymous Author(s)}
+\institute{Anonymous Institution, Peru\\
+\email{anonymous@example.org}}
+
+\maketitle
+
+\begin{abstract}
+Reliable traffic monitoring in resource-constrained urban settings requires
+detectors that remain accurate under oblique viewpoints while being suitable for
+deployment on modest hardware. This work fine-tunes YOLO11n-OBB for nine vehicle
+categories in Peruvian traffic imagery. We build clip-level train, validation,
+and test partitions to prevent adjacent video frames from appearing in different
+splits. A controlled data-scaling study evaluates training subsets of 1,000,
+1,500, 2,000, and 2,500 images using the same 50-epoch protocol and an effective
+input size of 544 pixels. Test mAP@50 increases from 66.2\% with 1,000 images to
+91.4\% with 2,500 images, while mAP@50--95 rises from 54.8\% to 78.5\%.
+On the 2,500-image subset, a second configuration trained for 70 epochs at 640
+pixels achieves 93.9\% mAP@50 and 81.7\% mAP@50--95 with 2.66 million parameters.
+Desktop CPU measurements are reported only as a four-thread proxy; the NCNN
+export is prepared for a separate on-device Raspberry Pi evaluation. The results
+show that a compact oriented detector can obtain strong accuracy from a modest
+domain-specific dataset, and establish a reproducible basis for low-cost traffic
+analytics in Peru.
+
+\keywords{Oriented object detection \and Vehicle detection \and YOLO11n-OBB
+\and Edge AI \and Intelligent transportation systems.}
+\end{abstract}
+
+\section{Introduction}
+
+Traffic monitoring supports vehicle counting, incident analysis, and urban
+planning. Yet the deployment conditions of many cities make it impractical to
+assume dedicated GPUs at every camera. A useful detector must therefore balance
+accuracy with a small computational footprint. This is particularly relevant in
+Peruvian road scenes, where surveillance footage can contain cars, buses,
+microbuses, mototaxis, motorcycles, and trucks under substantial perspective
+distortion.
+
+Conventional axis-aligned boxes can contain considerable background when a
+vehicle is viewed at an angle. In dense traffic, they can also overlap heavily
+with neighboring vehicles. Oriented bounding boxes (OBBs) encode the extent and
+orientation of an object explicitly, an advantage already exploited in aerial
+image benchmarks such as DOTA~\cite{xia2018dota,ding2022dota}. The same geometry
+is relevant to elevated traffic cameras, although the visual domain, classes,
+and practical deployment constraints differ from aerial imagery.
+
+This paper investigates the fine-tuning of YOLO11n-OBB, a compact member of the
+Ultralytics YOLO family that supports OBB prediction~\cite{ultralytics_yolo11,ultralytics_obb}. We focus on the amount of domain-specific data required for
+useful performance and on a deployment path that can later be assessed on ARM
+hardware. The present paper makes the following contributions:
+
+\begin{itemize}
+\item A reproducible conversion and clip-level splitting protocol for nine
+vehicle categories from Peruvian traffic videos.
+\item A controlled data-scaling experiment from 1,000 to 2,500 images under a
+fixed 50-epoch training protocol.
+\item A higher-resolution 2,500-image configuration that attains 93.9\%
+mAP@50 and 81.7\% mAP@50--95 with 2.66 million parameters.
+\item A pre-specified NCNN benchmark protocol for Raspberry Pi deployment that
+keeps desktop CPU measurements separate from device-side results.
+\end{itemize}
+
+\section{Related Work}
+
+\subsection{Vehicle Detection and Oriented Bounding Boxes}
+
+One-stage detectors popularized the use of direct, real-time object prediction
+from images~\cite{redmon2016yolo}. Vehicle benchmarks such as UA-DETRAC have
+made it possible to evaluate detection and tracking in traffic video, but they
+do not address the class composition and OBB annotations used in this
+work~\cite{wen2015uadetrac}. In aerial imagery, arbitrary-oriented quadrilaterals
+are essential because objects exhibit strong variation in rotation and scale;
+DOTA provides a widely used benchmark for this setting~\cite{xia2018dota}.
+
+The current study transfers this representation to elevated traffic footage.
+OBBs are not assumed to solve every source of error---occlusion, small objects,
+and class imbalance remain difficult---but they provide a closer geometric
+description of rotated vehicles than horizontal boxes. YOLO11 supports OBB
+training and inference in the Ultralytics implementation used here
+\cite{ultralytics_obb}.
+
+\subsection{Efficient Inference for Edge Devices}
+
+Embedded deployment requires that model conversion and runtime behavior be
+reported separately from training accuracy. NCNN is an inference framework aimed
+at mobile, embedded, and desktop environments, and provides a conversion path
+from PyTorch or ONNX models~\cite{ncnn}. We export the selected checkpoint to
+NCNN, but do not claim Raspberry Pi throughput until it has been measured on the
+target device. This distinction is important because a desktop CPU measurement,
+even with a restricted number of threads, cannot characterize an ARM platform.
+
+\section{Dataset and Experimental Method}
+
+\subsection{Dataset and OBB Conversion}
+
+The data consist of traffic surveillance images from Peru with annotations for
+nine categories: \textit{car}, \textit{van}, \textit{microbus}, \textit{minibus},
+\textit{bus}, \textit{articulated\_bus}, \textit{truck}, \textit{mototaxi}, and
+\textit{motorcycle}. Source annotations encode a class identifier, center
+coordinates, width, height, and angle. Each annotation is converted to the four
+normalized corner coordinates expected by YOLO-OBB.
+
+For a box centered at $(c_x,c_y)$ with width $w$, height $h$, and orientation
+$\theta$, a local corner $(d_x,d_y) \in \{(-w/2,-h/2),(w/2,-h/2),
+(w/2,h/2),(-w/2,h/2)\}$ is transformed as
+\begin{equation}
+\begin{aligned}
+x &= c_x+d_x\cos\theta-d_y\sin\theta,\\
+y &= c_y+d_x\sin\theta+d_y\cos\theta.
+\end{aligned}
+\label{eq:obb}
+\end{equation}
+The resulting coordinates are divided by image width and height and clipped to
+$[0,1]$.
+
+Subsets are formed by allocating a quota to each source video and selecting
+temporally separated frames within that video. Images are subsequently grouped
+by clip identifier. Whole clips, rather than individual frames, are assigned to
+train, validation, or test. This prevents near-duplicate adjacent frames from
+leaking across partitions. The random seed for a subset of size $n$ is $42+n$.
+Table~\ref{tab:splits} reports the resulting partitions.
+
+\begin{table}
+\caption{Clip-level data partitions used in the experiments.}
+\label{tab:splits}
+\centering
+\begin{tabular}{rrrrr}
+\toprule
+Subset & Train & Validation & Test & Total \\
+\midrule
+1,000 & 700 & 150 & 150 & 1,000 \\
+1,500 & 1,050 & 225 & 225 & 1,500 \\
+2,000 & 1,400 & 300 & 300 & 2,000 \\
+2,500 & 1,748 & 376 & 376 & 2,500 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Training Protocol and Metrics}
+
+All experiments initialize from \texttt{yolo11n-obb.pt}. The model contains
+2,655,478 parameters. The fixed scaling protocol uses a batch size of 32,
+50 epochs, and a requested image size of 540 pixels. The training runtime aligns
+this requested size to the 544-pixel stride-compatible effective input size;
+we use the latter when naming the experimental configuration. The model with
+2,500 images is also trained for 70 epochs at 640 pixels. In both cases,
+patience is 20 epochs and the seed is deterministic.
+
+The checkpoint selected by validation is evaluated once on the held-out test
+split. We report precision, recall, mAP at IoU 0.50 (mAP@50), and mAP averaged
+over IoU thresholds from 0.50 to 0.95 (mAP@50--95), following the common COCO
+evaluation convention~\cite{lin2014coco}. CPU latency is measured on 30 test
+images with batch size one and four CPU threads. It is explicitly labeled a
+desktop proxy, not an edge-device result.
+
+\section{Results}
+
+\subsection{Data Scaling Under a Fixed Training Protocol}
+
+Table~\ref{tab:scaling} presents the controlled data-scaling results. The
+strongest result in this family is obtained with 2,500 images: 91.4\% mAP@50
+and 78.5\% mAP@50--95. Relative to 1,000 images, this is a gain of 25.2 and
+23.6 percentage points, respectively. The gain is not strictly monotonic at
+every intermediate point: mAP@50 is slightly lower at 2,000 than at 1,500
+images. Because each subset has a clip-level test split of its own, this local
+variation may reflect both training-data composition and finite test-set
+variation. It should not be over-interpreted.
+
+\begin{table*}
+\caption{Test performance for the controlled scaling experiment. All rows use
+YOLO11n-OBB, 50 epochs, batch size 32, and a 544-pixel effective input size.
+CPU measurements are a four-thread desktop proxy over 30 images.}
+\label{tab:scaling}
+\centering
+\small
+\begin{tabular}{rrrrrrr}
+\toprule
+Images & mAP@50 & mAP@50--95 & Precision & Recall & Latency (ms) & CPU FPS \\
+\midrule
+1,000 & 0.6622 & 0.5483 & 0.7742 & 0.6425 & 30.99 & 32.27 \\
+1,500 & 0.8167 & 0.6769 & 0.8352 & 0.7058 & 32.11 & 31.14 \\
+2,000 & 0.8129 & 0.6873 & 0.8616 & 0.7219 & 32.98 & 30.32 \\
+2,500 & \textbf{0.9140} & \textbf{0.7847} & \textbf{0.9053} &
+\textbf{0.8517} & 32.89 & 30.41 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\subsection{Candidate Configuration at 640 Pixels}
+
+The 70-epoch, 640-pixel configuration is a candidate for edge deployment. It
+uses the same 2,500-image subset as the last row of Table~\ref{tab:scaling},
+but changes both the number of epochs and the resolution. It therefore compares
+complete configurations rather than isolating either factor. As shown in
+Table~\ref{tab:final}, it improves mAP@50 by 2.5 percentage points and
+mAP@50--95 by 3.3 percentage points over the 50-epoch configuration.
+
+\begin{table}
+\caption{Two configurations trained on the 2,500-image subset.}
+\label{tab:final}
+\centering
+\small
+\begin{tabular}{lrrrr}
+\toprule
+Configuration & mAP@50 & mAP@50--95 & Precision & Recall \\
+\midrule
+50 epochs, 544 px & 0.9140 & 0.7847 & 0.9053 & 0.8517 \\
+70 epochs, 640 px & \textbf{0.9394} & \textbf{0.8175} & \textbf{0.9281} & \textbf{0.8595} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The AP@50 values of the selected 640-pixel model are shown in
+Table~\ref{tab:classes}. Most vehicle categories exceed 0.90 AP@50. Motorcycle
+is the lowest-scoring class (0.749), making it a useful target for future error
+analysis. The present measurements do not establish the cause; likely factors
+such as scale, occlusion, and class frequency should be tested rather than
+assumed.
+
+\begin{table}
+\caption{Per-class AP@50 for the 70-epoch, 640-pixel model.}
+\label{tab:classes}
+\centering
+\small
+\begin{tabular}{lr@{\qquad}lr}
+\toprule
+Class & AP@50 & Class & AP@50 \\
+\midrule
+car & 0.993 & van & 0.962 \\
+microbus & 0.924 & minibus & 0.941 \\
+bus & 0.995 & articulated\_bus & 0.995 \\
+truck & 0.981 & mototaxi & 0.915 \\
+motorcycle & 0.749 & & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Raspberry Pi Evaluation Protocol}
+
+The selected model has been exported to NCNN, but on-device measurements are
+not yet available. To keep the deployment claim reproducible, the final version
+will report the Raspberry Pi model and memory, operating system and kernel,
+NCNN version, CPU thread count, thermal conditions, warm-up procedure, and the
+number of timed images. Mean latency, P50, P95, and FPS will be measured for
+the resolutions 640, 544, 416, and 320. The paper will also state whether the
+time includes preprocessing, postprocessing, and output serialization.
+
+Where feasible, accuracy at each input resolution will be evaluated on the same
+376-image test split used for the 2,500-image model. If only latency is
+measured, accuracy cells will be marked ``not evaluated'' rather than estimated.
+Table~\ref{tab:edge} is intentionally included as a reporting template; it is
+not evidence of Raspberry Pi performance.
+
+\begin{table*}
+\caption{Edge-benchmark reporting template. Only the desktop proxy row has
+been measured.}
+\label{tab:edge}
+\centering
+\small
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrrrrrrr}
+\toprule
+Runtime & Resolution & Threads & Images & Mean (ms) & P50/P95 (ms) & FPS & mAP@50 & Status \\
+\midrule
+PyTorch desktop CPU proxy & 640 & 4 & 30 & 33.78 & -- & 29.60 & 0.9394 & Measured \\
+NCNN on Raspberry Pi & 640 & TBD & TBD & TBD & TBD & TBD & TBD & Pending \\
+NCNN on Raspberry Pi & 544 & TBD & TBD & TBD & TBD & TBD & TBD & Pending \\
+NCNN on Raspberry Pi & 416 & TBD & TBD & TBD & TBD & TBD & TBD & Pending \\
+NCNN on Raspberry Pi & 320 & TBD & TBD & TBD & TBD & TBD & TBD & Pending \\
+\bottomrule
+\end{tabular}
+}
+\end{table*}
+
+\section{Discussion and Limitations}
+
+The fixed-protocol results indicate that 2,500 images are sufficient to obtain
+strong held-out accuracy for the present domain. However, the scaling experiment
+does not estimate uncertainty across random partitions: each data size has a
+different clip-level test set. A stronger follow-up study would use a common
+fixed test set, repeat the partitioning over multiple seeds, or both. It would
+also report class frequencies and confidence intervals.
+
+The study currently has no device-side result, and the desktop proxy must not
+be used to claim real-time Raspberry Pi inference. In addition, the breadth of
+geographic coverage, nighttime scenes, adverse weather, and camera viewpoints
+must be documented before making broader generalization claims. Future work can
+add these conditions and combine detection with multi-object tracking for
+vehicle counting and trajectory analysis.
+
+\section{Conclusion}
+
+We presented a clip-level evaluation of YOLO11n-OBB for oriented vehicle
+detection in Peruvian traffic scenes. Under a fixed 50-epoch protocol, increasing
+the subset from 1,000 to 2,500 images improved test mAP@50 from 66.2\% to
+91.4\%. A 70-epoch, 640-pixel configuration reached 93.9\% mAP@50 and 81.7\%
+mAP@50--95 with 2.66 million parameters. These findings support the use of a
+compact oriented detector for this domain, while the final conclusion on edge
+viability awaits the planned, fully documented NCNN benchmark on Raspberry Pi.
+
+\begin{credits}
+\subsubsection{Acknowledgments} To be completed after confirming the data
+license, institutional affiliations, and any funding source.
+
+\subsubsection{Disclosure of Interests} The authors declare no competing
+interests.
+\end{credits}
+
+\bibliographystyle{splncs04}
+\bibliography{references}
+
+\end{document}

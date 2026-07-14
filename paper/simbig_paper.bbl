@@ -1,0 +1,48 @@
+\begin{thebibliography}{1}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+\providecommand{\doi}[1]{https://doi.org/#1}
+
+\bibitem{ding2022dota}
+Ding, J., Xue, N., Xia, G.S., Bai, X., Yang, W., Yang, M.Y., Belongie, S., Luo,
+  J., Datcu, M., Pelillo, M., Zhang, L.: Object detection in aerial images: A
+  large-scale benchmark and challenges. IEEE Transactions on Pattern Analysis
+  and Machine Intelligence  \textbf{44}(11),  7778--7796 (2022).
+  \doi{10.1109/TPAMI.2021.3117983}
+
+\bibitem{lin2014coco}
+Lin, T.Y., Maire, M., Belongie, S., Hays, J., Perona, P., Ramanan, D.,
+  Doll{\'a}r, P., Zitnick, C.L.: Microsoft coco: Common objects in context. In:
+  European Conference on Computer Vision. pp. 740--755 (2014).
+  \doi{10.1007/978-3-319-10602-1_48}
+
+\bibitem{redmon2016yolo}
+Redmon, J., Divvala, S., Girshick, R., Farhadi, A.: You only look once:
+  Unified, real-time object detection. In: Proceedings of the IEEE Conference
+  on Computer Vision and Pattern Recognition. pp. 779--788 (2016)
+
+\bibitem{ncnn}
+{Tencent}: {NCNN}: High-performance neural network inference framework.
+  \url{https://github.com/Tencent/ncnn}, accessed: 2026-07-14
+
+\bibitem{ultralytics_obb}
+{Ultralytics}: Oriented bounding boxes object detection.
+  \url{https://docs.ultralytics.com/tasks/obb/}, accessed: 2026-07-14
+
+\bibitem{ultralytics_yolo11}
+{Ultralytics}: {YOLO11} model documentation.
+  \url{https://docs.ultralytics.com/models/yolo11/}, accessed: 2026-07-14
+
+\bibitem{wen2015uadetrac}
+Wen, L., Du, D., Cai, Z., Lei, Z., Chang, M.C., Qi, H., Lim, J., Yang, M.H.,
+  Lyu, S.: Ua-detrac: A new benchmark and protocol for multi-object detection
+  and tracking. Computer Vision and Image Understanding  \textbf{193},  102907
+  (2020). \doi{10.1016/j.cviu.2020.102907}
+
+\bibitem{xia2018dota}
+Xia, G.S., Bai, X., Ding, J., Zhu, Z., Belongie, S., Luo, J., Datcu, M.,
+  Pelillo, M., Zhang, L.: Dota: A large-scale dataset for object detection in
+  aerial images. In: Proceedings of the IEEE Conference on Computer Vision and
+  Pattern Recognition. pp. 3974--3983 (2018)
+
+\end{thebibliography}
