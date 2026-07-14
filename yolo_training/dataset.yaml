@@ -1,0 +1,15 @@
+path: c:/IA/yolo_obb_dataset
+train: images/train
+val: images/val
+
+# El dataset orginal tiene clases de 1 a 9, mapeadas a 0-8
+names:
+  0: class1
+  1: class2
+  2: class3
+  3: class4
+  4: class5
+  5: class6
+  6: class7
+  7: class8
+  8: class9

@@ -1,0 +1,27 @@
+# Entornos virtuales
+.venv/
+venv/
+env/
+.env
+
+# Directorios de datos y resultados que no deben subirse
+datasets_porciones/
+mtc_challenge-*/
+muestra_300-*/
+train-*/
+runs/
+yolo_obb_dataset/
+
+# Archivos de caché y python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Modelos y pesos (opcional, comentar si se quieren subir pesos pequeños)
+*.pt
+!yolo11n-obb.pt
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
