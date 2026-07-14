@@ -1,2 +1,2 @@
-requested_train_size,available_subset_size,train_images,val_images,epochs,parameters,model_size_mb,total_train_seconds_cpu,seconds_per_epoch_cpu,latency_ms_per_image_cpu,fps_cpu,peak_ram_mb,precision_obb_iou50,recall_obb_iou50,f1_obb_iou50,macro_ap50_obb
-300,300,240,60,1,570232,2.196671485900879,2.3252894050019677,2.3252894050019677,17.15964375034673,58.27626811773373,854.921875,0.0,0.0,0.0,0.0
+dataset_size,available_images,train_images,val_images,test_images,epochs_requested,epochs_completed,parameters,model_size_mb,total_train_seconds_cpu,seconds_per_epoch_cpu,latency_ms_per_image_cpu,fps_cpu,peak_ram_mb,precision_obb_iou50,recall_obb_iou50,f1_obb_iou50,macro_ap50_obb,mean_matched_iou_obb
+1000,1000,700,150,150,8,8,131904,0.5794687271118164,472.9979312739997,59.124741409249964,13.340325487479276,74.96068974767985,1059.3515625,0.07745398773006135,0.12760581174984206,0.09639704127893105,0.046367839704585384,0.6033864620179241
