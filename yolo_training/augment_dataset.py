@@ -3,20 +3,18 @@ import shutil
 from collections import Counter
 
 def main():
-    images_dir = r'c:\IA\yolo_obb_dataset\images\train'
-    labels_dir = r'c:\IA\yolo_obb_dataset\labels\train'
+    images_dir = r'c:\IA\yolo_obb_dataset_full\images\train'
+    labels_dir = r'c:\IA\yolo_obb_dataset_full\labels\train'
     
-    # Multiplicadores para cada clase minoritaria (indice de clase YOLO)
-    # basándonos en la distribución que medimos:
+    # Multiplicadores ajustados para el dataset COMPLETO de 54k imágenes:
     multipliers = {
-        5: 20, # class6: ~12 instancias -> 20x
-        2: 10, # class3: ~111 instancias -> 10x
-        4: 10, # class5: ~106 instancias -> 10x
-        7: 5,  # class8: ~233 instancias -> 5x
-        1: 5,  # class2: ~465 instancias -> 5x
-        3: 5,  # class4: ~838 instancias -> 5x
-        6: 3,  # class7: ~1433 instancias -> 3x
-        8: 3,  # class9: ~2088 instancias -> 3x
+        5: 20, # articulado (solo 200 instancias) -> 20x
+        4: 10, # omnibus (1,988 instancias) -> 10x
+        2: 10, # microbus (2,002 instancias) -> 10x
+        7: 5,  # mototaxi (4,809 instancias) -> 5x
+        1: 3,  # Combi (7,772 instancias) -> 3x
+        3: 2,  # minibus (15,774 instancias) -> 2x
+        # camion, motocicleta y auto NO se multiplican, ya tienen de 26k a 386k instancias.
     }
     
     files_to_duplicate = {}
@@ -62,7 +60,11 @@ def main():
             new_img_path = os.path.join(images_dir, f"{new_base}{img_ext}")
             
             shutil.copy2(orig_label_path, new_label_path)
-            shutil.copy2(orig_img_path, new_img_path)
+            # Usar os.link (Hard Link) en lugar de copiar para ahorrar 100% de espacio en disco
+            try:
+                os.link(orig_img_path, new_img_path)
+            except FileExistsError:
+                pass
             
     print("¡Sobremuestreo completado con éxito!")
 

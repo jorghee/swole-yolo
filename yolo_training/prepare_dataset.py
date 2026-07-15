@@ -5,9 +5,9 @@ import random
 import shutil
 
 # Rutas
-csv_path = r'c:\IA\datasets_porciones\dataset_3000\etiquetas_3000.csv'
-images_src_dir = r'c:\IA\datasets_porciones\dataset_3000\images'
-dataset_dest_dir = r'c:\IA\yolo_obb_dataset'
+csv_path = r'c:\IA\mtc_challenge-20260630T032548Z-3-003\mtc_challenge\train.csv'
+images_src_dir = r'c:\IA\train-001\train'
+dataset_dest_dir = r'c:\IA\yolo_obb_dataset_full'
 
 # Crear estructura
 os.makedirs(os.path.join(dataset_dest_dir, 'images', 'train'), exist_ok=True)
@@ -54,11 +54,30 @@ with open(csv_path, 'r') as f:
     next(reader) # Saltar cabecera
     rows = list(reader)
 
+from collections import defaultdict
+video_to_rows = defaultdict(list)
+for row in rows:
+    img_id = row[0]
+    # Extraer el ID del video (ej: v_ab12cd34ef)
+    vid_id = img_id.rsplit('_', 1)[0]
+    video_to_rows[vid_id].append(row)
+
+unique_vids = list(video_to_rows.keys())
 random.seed(42)
-random.shuffle(rows)
-split_idx = int(len(rows) * 0.8)
-train_rows = rows[:split_idx]
-val_rows = rows[split_idx:]
+random.shuffle(unique_vids)
+
+# Separar el 80% de los VIDEOS (no de los frames individuales) para evitar data leakage
+split_idx = int(len(unique_vids) * 0.8)
+train_vids = unique_vids[:split_idx]
+val_vids = unique_vids[split_idx:]
+
+train_rows = []
+for vid in train_vids:
+    train_rows.extend(video_to_rows[vid])
+    
+val_rows = []
+for vid in val_vids:
+    val_rows.extend(video_to_rows[vid])
 
 def process_split(split_rows, split_name):
     for row in split_rows:

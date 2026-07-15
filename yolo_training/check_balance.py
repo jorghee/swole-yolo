@@ -3,7 +3,7 @@ from collections import Counter
 import yaml
 
 def main():
-    train_dir = r'c:\IA\yolo_obb_dataset\labels\train'
+    train_dir = r'c:\IA\yolo_obb_dataset_full\labels\train'
     yaml_path = r'dataset.yaml'
     
     with open(yaml_path, 'r') as f:

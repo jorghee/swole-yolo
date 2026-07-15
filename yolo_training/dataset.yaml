@@ -1,15 +1,15 @@
-path: c:/IA/yolo_obb_dataset
+path: c:/IA/yolo_obb_dataset_full
 train: images/train
 val: images/val
 
 # El dataset orginal tiene clases de 1 a 9, mapeadas a 0-8
 names:
-  0: class1
-  1: class2
-  2: class3
-  3: class4
-  4: class5
-  5: class6
-  6: class7
-  7: class8
-  8: class9
+  0: Auto
+  1: Combi
+  2: microbus
+  3: minibus
+  4: omnibus
+  5: articulado
+  6: camion
+  7: mototaxi
+  8: motocicleta

@@ -2,7 +2,7 @@ import csv
 import math
 
 classes = set()
-with open(r'c:\IA\datasets_porciones\dataset_3000\etiquetas_3000.csv', 'r') as f:
+with open(r'c:\IA\mtc_challenge-20260630T032548Z-3-003\mtc_challenge\train.csv', 'r') as f:
     reader = csv.reader(f)
     next(reader)
     for row in reader:
