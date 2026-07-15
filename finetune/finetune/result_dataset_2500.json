@@ -1,0 +1,40 @@
+{
+  "dataset_size": 2500,
+  "available_images": 2500,
+  "train_images": 1748,
+  "val_images": 376,
+  "test_images": 376,
+  "base_model": "yolo11n-obb.pt",
+  "epochs_requested": 70,
+  "img_size": 640,
+  "batch_size": 32,
+  "parameters": 2655478,
+  "model_size_mb": 5.597720146179199,
+  "total_train_seconds": 991.9520874939999,
+  "test_precision": 0.9281398384818572,
+  "test_recall": 0.8595321934241544,
+  "test_mAP50": 0.9394058439189126,
+  "test_mAP50-95": 0.8174835796289366,
+  "test_fitness": 0.8174835796289366,
+  "per_class_ap50": {
+    "car": 0.9927580118612929,
+    "van": 0.9623041816816175,
+    "microbus": 0.9239231601731601,
+    "minibus": 0.9407409069220463,
+    "bus": 0.995,
+    "articulated_bus": 0.995,
+    "truck": 0.9814748057317555,
+    "mototaxi": 0.9148353328173375,
+    "motorcycle": 0.7486161960830029
+  },
+  "latency_ms_per_image_cpu": 33.78075879997292,
+  "fps_cpu": 29.60265060714982,
+  "benchmark_images": 30,
+  "benchmark_threads": 4,
+  "weights": "/home/ubuntu/exp/reports/paper_metrics/finetune/runs/dataset_2500/weights/best.pt",
+  "exports": {
+    "onnx": "/home/ubuntu/exp/reports/paper_metrics/finetune/runs/dataset_2500/weights/best.onnx",
+    "ncnn": "/home/ubuntu/exp/reports/paper_metrics/finetune/runs/dataset_2500/weights/best_ncnn_model"
+  },
+  "run_dir": "/home/ubuntu/exp/reports/paper_metrics/finetune/runs/dataset_2500"
+}
