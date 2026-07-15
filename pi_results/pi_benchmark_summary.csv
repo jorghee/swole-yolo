@@ -1,0 +1,4 @@
+model_name,imgsz,images,latency_ms_mean,latency_ms_median,latency_ms_std,latency_ms_p95,fps,pt_size_mb,ncnn_size_mb,cpu_percent_mean,cpu_percent_max,soc_temp_start_c,soc_temp_end_c,throttled_flag_start,throttled_flag_end,detections_per_image
+m1_1000img_544,544,300,302.43,301.8,5.33,311.52,3.31,,10.23,81.7,84.2,48.199,65.244,0x0,0x0,11.45
+m2_2500img_544,544,300,300.47,300.14,2.59,305.27,3.33,,10.23,82.6,84.1,50.634,70.114,0x0,0x0,11.42
+m3_2500img_640,640,300,399.9,399.69,3.6,405.95,2.5,,10.25,84.1,85.5,49.66,70.114,0x0,0x0,11.5
