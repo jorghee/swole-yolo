@@ -1,5 +1,9 @@
 # Borrador y guía de resultados — YOLO11n-OBB para tráfico peruano
 
+> **Documento de apoyo histórico.** El manuscrito vigente, con autores y
+> resultados medidos en Raspberry Pi, está en `simbig_paper.tex`. Esta guía se
+> conserva como registro de decisiones y de resultados previos.
+
 > **Estado del documento (14 de julio de 2026).** Este archivo contiene texto
 > listo para adaptar a la plantilla LNCS y resultados ya medidos en el conjunto
 > de prueba. Las mediciones en Raspberry Pi siguen pendientes y aparecen como
