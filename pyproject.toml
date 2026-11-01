@@ -15,6 +15,9 @@ dependencies = [
     "ncnn",
 ]
 
+[dependency-groups]
+docs = ["zensical>=0.1"]
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"

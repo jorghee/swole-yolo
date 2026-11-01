@@ -31,3 +31,6 @@ paper/*-eps-converted-to.pdf
 
 # Documentos compilados
 paper/*.pdf
+
+# Sitio de documentacion generado (zensical build)
+site/

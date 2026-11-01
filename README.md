@@ -55,6 +55,15 @@ Reentrenar (solo el tamaño 2 500, 70 épocas, 640 px por defecto):
 scripts/run_finetune.sh
 ```
 
+## Documentación y guía de aprendizaje
+
+Sitio hecho con [Zensical](https://zensical.org) en `docs/`: una **guía de principiante a experto** (8 capítulos + glosario: fundamentos, detección, métricas, OBB, YOLO11, datos, edge, metodología) y la documentación del proyecto.
+
+```bash
+uv pip install zensical
+zensical serve     # http://localhost:8000
+```
+
 ## Notas importantes
 
 - **Código del paper = `src/swole_yolo/finetune.py`.** El baseline desde cero (red propia en PyTorch) está en `archive/baseline_from_scratch/` y **no** produjo los resultados del paper.
