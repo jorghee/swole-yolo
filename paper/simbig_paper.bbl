@@ -4,48 +4,84 @@
 \providecommand{\doi}[1]{https://doi.org/#1}
 
 \bibitem{ding2019roitransformer}
-Ding, J., Xue, N., Long, Y., Xia, G.S., Lu, Q.: Learning {RoI} transformer for oriented object detection in aerial images. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. pp. 2849--2858 (2019)
+Ding, J., Xue, N., Long, Y., Xia, G.S., Lu, Q.: Learning {RoI} transformer for
+  oriented object detection in aerial images. In: Proceedings of the IEEE/CVF
+  Conference on Computer Vision and Pattern Recognition. pp. 2849--2858 (2019)
 
 \bibitem{ding2022dota}
-Ding, J., Xue, N., Xia, G.S., Bai, X., Yang, W., Yang, M.Y., Belongie, S., Luo, J., Datcu, M., Pelillo, M., Zhang, L.: Object detection in aerial images: A large-scale benchmark and challenges. IEEE Transactions on Pattern Analysis and Machine Intelligence  \textbf{44}(11),  7778--7796 (2022). \doi{10.1109/TPAMI.2021.3117983}
+Ding, J., Xue, N., Xia, G.S., Bai, X., Yang, W., Yang, M.Y., Belongie, S., Luo,
+  J., Datcu, M., Pelillo, M., Zhang, L.: Object detection in aerial images: A
+  large-scale benchmark and challenges. IEEE Transactions on Pattern Analysis
+  and Machine Intelligence  \textbf{44}(11),  7778--7796 (2022).
+  \doi{10.1109/TPAMI.2021.3117983}
 
 \bibitem{lin2014coco}
-Lin, T.Y., Maire, M., Belongie, S., Hays, J., Perona, P., Ramanan, D., Doll{\'a}r, P., Zitnick, C.L.: Microsoft coco: Common objects in context. In: European Conference on Computer Vision. pp. 740--755 (2014). \doi{10.1007/978-3-319-10602-1_48}
+Lin, T.Y., Maire, M., Belongie, S., Hays, J., Perona, P., Ramanan, D.,
+  Doll{\'a}r, P., Zitnick, C.L.: Microsoft coco: Common objects in context. In:
+  European Conference on Computer Vision. pp. 740--755 (2014).
+  \doi{10.1007/978-3-319-10602-1_48}
 
 \bibitem{mtcsmartchallenge}
-{Ministerio de Transportes y Comunicaciones del Per\'u}: {MTC SMART Challenge: IA para la Movilidad del Per\'u}. \url{https://www.kaggle.com/competitions/mtc-smart-challenge-ia-para-la-movilidad-del-peru/data}, kaggle competition data page. Accessed: 2026-07-19
+{Ministerio de Transportes y Comunicaciones del Per\'u}: {MTC SMART Challenge:
+  IA para la Movilidad del Per\'u}.
+  \url{https://www.kaggle.com/competitions/mtc-smart-challenge-ia-para-la-movilidad-del-peru/data},
+  kaggle competition data page. Accessed: 2026-07-19
 
 \bibitem{redmon2016yolo}
-Redmon, J., Divvala, S., Girshick, R., Farhadi, A.: You only look once: Unified, real-time object detection. In: Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. pp. 779--788 (2016)
+Redmon, J., Divvala, S., Girshick, R., Farhadi, A.: You only look once:
+  Unified, real-time object detection. In: Proceedings of the IEEE Conference
+  on Computer Vision and Pattern Recognition. pp. 779--788 (2016)
 
 \bibitem{santos2024edge}
-Santos, R.C.d.M., Silva, M.C., Oliveira, R.A.R.: Real-time object detection performance analysis using {YOLOv7} on edge devices. IEEE Latin America Transactions  \textbf{22}(10),  799--805 (2024). \doi{10.1109/TLA.2024.10705971}
+Santos, R.C.d.M., Silva, M.C., Oliveira, R.A.R.: Real-time object detection
+  performance analysis using {YOLOv7} on edge devices. IEEE Latin America
+  Transactions  \textbf{22}(10),  799--805 (2024).
+  \doi{10.1109/TLA.2024.10705971}
 
 \bibitem{ncnn}
-{Tencent}: {NCNN}: High-performance neural network inference framework. \url{https://github.com/Tencent/ncnn}, accessed: 2026-07-14
+{Tencent}: {NCNN}: High-performance neural network inference framework.
+  \url{https://github.com/Tencent/ncnn}, accessed: 2026-07-14
 
 \bibitem{ultralytics_obb}
-{Ultralytics}: Oriented bounding boxes object detection. \url{https://docs.ultralytics.com/tasks/obb/}, accessed: 2026-07-14
+{Ultralytics}: Oriented bounding boxes object detection.
+  \url{https://docs.ultralytics.com/tasks/obb/}, accessed: 2026-07-14
 
 \bibitem{ultralytics_yolo11}
-{Ultralytics}: {YOLO11} model documentation. \url{https://docs.ultralytics.com/models/yolo11/}, accessed: 2026-07-14
+{Ultralytics}: {YOLO11} model documentation.
+  \url{https://docs.ultralytics.com/models/yolo11/}, accessed: 2026-07-14
 
 \bibitem{wen2015uadetrac}
-Wen, L., Du, D., Cai, Z., Lei, Z., Chang, M.C., Qi, H., Lim, J., Yang, M.H., Lyu, S.: Ua-detrac: A new benchmark and protocol for multi-object detection and tracking. Computer Vision and Image Understanding  \textbf{193},  102907 (2020). \doi{10.1016/j.cviu.2020.102907}
+Wen, L., Du, D., Cai, Z., Lei, Z., Chang, M.C., Qi, H., Lim, J., Yang, M.H.,
+  Lyu, S.: Ua-detrac: A new benchmark and protocol for multi-object detection
+  and tracking. Computer Vision and Image Understanding  \textbf{193},  102907
+  (2020). \doi{10.1016/j.cviu.2020.102907}
 
 \bibitem{xia2018dota}
-Xia, G.S., Bai, X., Ding, J., Zhu, Z., Belongie, S., Luo, J., Datcu, M., Pelillo, M., Zhang, L.: Dota: A large-scale dataset for object detection in aerial images. In: Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. pp. 3974--3983 (2018)
+Xia, G.S., Bai, X., Ding, J., Zhu, Z., Belongie, S., Luo, J., Datcu, M.,
+  Pelillo, M., Zhang, L.: Dota: A large-scale dataset for object detection in
+  aerial images. In: Proceedings of the IEEE Conference on Computer Vision and
+  Pattern Recognition. pp. 3974--3983 (2018)
 
 \bibitem{xie2021orientedrcnn}
-Xie, X., Cheng, G., Wang, J., Yao, X., Han, J.: Oriented {R-CNN} for object detection. In: Proceedings of the IEEE/CVF International Conference on Computer Vision. pp. 3520--3529 (2021)
+Xie, X., Cheng, G., Wang, J., Yao, X., Han, J.: Oriented {R-CNN} for object
+  detection. In: Proceedings of the IEEE/CVF International Conference on
+  Computer Vision. pp. 3520--3529 (2021)
 
 \bibitem{yang2021r3det}
-Yang, X., Yan, J., Feng, Z., He, T.: {R3Det}: Refined single-stage detector with feature refinement for rotating object. In: Proceedings of the AAAI Conference on Artificial Intelligence. vol.~35, pp. 3163--3171 (2021). \doi{10.1609/aaai.v35i4.16426}
+Yang, X., Yan, J., Feng, Z., He, T.: {R3Det}: Refined single-stage detector
+  with feature refinement for rotating object. In: Proceedings of the AAAI
+  Conference on Artificial Intelligence. vol.~35, pp. 3163--3171 (2021).
+  \doi{10.1609/aaai.v35i4.16426}
 
 \bibitem{yu2020bdd100k}
-Yu, F., Chen, H., Wang, X., Xian, W., Chen, Y., Liu, F., Madhavan, V., Darrell, T.: {BDD100K}: A diverse driving dataset for heterogeneous multitask learning. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. pp. 2636--2645 (2020). \doi{10.1109/CVPR42600.2020.00271}
+Yu, F., Chen, H., Wang, X., Xian, W., Chen, Y., Liu, F., Madhavan, V., Darrell,
+  T.: {BDD100K}: A diverse driving dataset for heterogeneous multitask
+  learning. In: Proceedings of the IEEE/CVF Conference on Computer Vision and
+  Pattern Recognition. pp. 2636--2645 (2020).
+  \doi{10.1109/CVPR42600.2020.00271}
 
 \bibitem{zhu2018visdrone}
-Zhu, P., Wen, L., Bian, X., Ling, H., Hu, Q.: Vision meets drones: A challenge. arXiv preprint arXiv:1804.07437  (2018)
+Zhu, P., Wen, L., Bian, X., Ling, H., Hu, Q.: Vision meets drones: A challenge.
+  arXiv preprint arXiv:1804.07437  (2018)
 
 \end{thebibliography}
