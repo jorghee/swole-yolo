@@ -3,7 +3,7 @@
 compara contra los numeros guardados en result_dataset_<n>.json.
 
 No entrena nada. Reutiliza la conversion y el split por clips de
-finetune/messi.py para reconstruir exactamente el mismo test.
+swole_yolo.data para reconstruir exactamente el mismo test.
 
 Uso:
     python scripts/repro_baseline.py --yolo-data-dir /tmp/yolo_ds --device cpu
@@ -16,17 +16,19 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "finetune"))
-import messi  # noqa: E402  (script historico; se renombrara en la Etapa 1)
+sys.path.insert(0, str(ROOT / "src"))
+from swole_yolo import data  # noqa: E402
+from swole_yolo.finetune import flatten_val_metrics  # noqa: E402
 
 # (tamano, imgsz, checkpoint, json con los numeros guardados)
+E50, E70 = "results/finetune_50ep_544px", "results/finetune_70ep_640px"
 RUNS = [
-    (1000, 540, "finetune/finetune50/runs/dataset_1000/weights/best.pt", "finetune/finetune50/result_dataset_1000.json"),
-    (1500, 540, "finetune/finetune50/runs/dataset_1500/weights/best.pt", "finetune/finetune50/result_dataset_1500.json"),
-    (2000, 540, "finetune/finetune50/runs/dataset_2000/weights/best.pt", "finetune/finetune50/result_dataset_2000.json"),
-    (2500, 540, "finetune/finetune50/runs/dataset_2500/weights/best_50.pt", "finetune/finetune50/result_dataset_2500.json"),
-    (3000, 540, "finetune/finetune50/runs/dataset_3000/weights/best.pt", "finetune/finetune50/result_dataset_3000.json"),
-    (2500, 640, "finetune/finetune/runs/dataset_2500/weights/best_70.pt", "finetune/finetune/result_dataset_2500.json"),
+    (1000, 540, "models/ds1000_50ep_544px.pt", f"{E50}/result_dataset_1000.json"),
+    (1500, 540, "models/ds1500_50ep_544px.pt", f"{E50}/result_dataset_1500.json"),
+    (2000, 540, "models/ds2000_50ep_544px.pt", f"{E50}/result_dataset_2000.json"),
+    (2500, 540, "models/ds2500_50ep_544px.pt", f"{E50}/result_dataset_2500.json"),
+    (3000, 540, "models/ds3000_50ep_544px.pt", f"{E50}/result_dataset_3000.json"),
+    (2500, 640, "models/ds2500_70ep_640px.pt", f"{E70}/result_dataset_2500.json"),
 ]
 KEYS = ["mAP50", "mAP50-95", "precision", "recall"]
 
@@ -46,13 +48,13 @@ def main() -> None:
             continue
         saved = json.loads((ROOT / saved_json).read_text())
         d = ROOT / "data" / f"dataset_{size}"
-        rows = messi.load_rows(d / f"etiquetas_{size}.csv", d / "images")
-        tr, va, te = messi.clip_level_indices(rows, 0.15, 0.15, 42 + size)
+        rows = data.load_rows(d / f"etiquetas_{size}.csv", d / "images")
+        tr, va, te = data.clip_level_indices(rows, 0.15, 0.15, 42 + size)
         dest = Path(args.yolo_data_dir) / f"dataset_{size}"
         yaml_path = dest / "data.yaml"
         if not yaml_path.exists():
-            yaml_path = messi.build_yolo_dataset(rows, {"train": tr, "val": va, "test": te}, dest)
-        m = messi.flatten_val_metrics(
+            yaml_path = data.build_yolo_dataset(rows, {"train": tr, "val": va, "test": te}, dest)
+        m = flatten_val_metrics(
             YOLO(str(ROOT / ckpt)).val(data=str(yaml_path), split="test", imgsz=imgsz, device=args.device, verbose=False,
                                   project=str(Path(args.yolo_data_dir) / "val_runs"), exist_ok=True)
         )
