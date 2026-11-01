@@ -74,13 +74,12 @@ Hallazgos de posicionamiento:
 - **YOLO11 ya no es el último de su familia** (YOLOv12, YOLO26): un revisor pedirá compararlos.
 - **Pendiente manual:** cuartiles SJR (SCImago bloqueó el acceso automático), APC y tiempos; el dataset del MTC solo tiene notas de prensa (no hay referencia citable ni licencia confirmada).
 
-## Etapa 5: plan de mejora para Q3+
-- [M] Escalado con test fijo común, 5+ semillas, media e IC, curva hasta 3 000+.
-- [M] Baselines con mismos datos y hardware: YOLOv8n-OBB, YOLO11s-OBB, HBB equivalente, entrenamiento desde cero.
-- [M] Ablación ordenada resolución × épocas.
-- [M] Benchmark en la Pi controlado (hilos, governor, versión NCNN), mAP en dispositivo, NCNN vs ONNX Runtime vs INT8.
-- [S] Más de un hardware (Pi 4, Pi 5, Jetson o CPU de escritorio).
-- [S] Tracking + conteo vehicular contra conteo real.
-- [S] Análisis de errores (motocicleta, tamaño de objeto, noche/clima).
-- [C] Prueba térmica y de energía de varias horas; publicar splits y pesos.
-- Luego: redacción completa y carta de respuesta a los revisores.
+## Etapa 5: plan de mejora para Q3+  ✅ (propuesto; requiere decisiones del equipo)
+El plan detallado se reescribió en dos documentos, a partir de las reseñas, las mediciones propias y la literatura verificada:
+
+- **[Hoja de ruta](mejora/plan_de_mejora.md):** tesis, contribuciones C1–C6, mapeo reseña → acción, puertas de decisión G0.1–G0.6, flujos de trabajo, presupuesto (≈ 40–50 GPU-horas, estimación), cronograma de ≈ 13 semanas, esqueleto del paper, alcance por destino, riesgos y criterios de calidad.
+- **[Protocolo experimental](mejora/protocolo_experimental.md):** hipótesis H1–H8 con reglas de decisión **fijadas de antemano**, CV agrupada por escenas, evaluador común (polígono / ProbIoU / HBB), estadística, protocolo de borde.
+
+Tesis propuesta: *¿cuándo y cuánto ayudan las cajas orientadas en detección vehicular cenital con pocos datos, y qué cuesta desplegarlas en una CPU ARM de bajo costo?* (evidencia controlada, no arquitectura nueva).
+
+Pendiente de decisión del equipo (bloquea el inicio): disponibilidad del dataset crudo (indicio: los 1 088 clips podrían ser todo el dataset), licencia del MTC, repositorio público, presupuesto, cuartil exigido y responsables.
