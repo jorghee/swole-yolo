@@ -63,7 +63,7 @@ Procedimiento mínimo:
 
 ## 8.5 Reportar resultados incómodos
 
-Entrenamos también con **3 000 imágenes** y salió **peor** que con 2 500 (0.885 vs. 0.914 en mAP@50). El paper no lo reporta; la curva termina en el mejor punto y la frase "2 500 imágenes son suficientes" parece más sólida de lo que es.
+Entrenamos también con **3 000 imágenes** y salió **peor** que con 2 500 (0.885 vs. 0.914 en mAP@50). La versión enviada a SIMBig no lo reportaba (la guía interna ordenaba excluirlo); la curva terminaba en el mejor punto y la frase "2 500 imágenes son suficientes" parecía más sólida de lo que es. La revisión lo incluye y lo explica: el test de 3 000 es otro conjunto, y en validación ese mismo modelo es el mejor.
 
 !!! warning "Reporte selectivo"
     Omitir resultados negativos o inconvenientes es una práctica cuestionable (*cherry-picking*). Un revisor atento que vea el repositorio lo notará. La corrección es sencilla: reportar el punto de 3 000, explicar la posible causa (otro test, ruido) y no concluir de más. Un resultado "incómodo" explicado honestamente da más credibilidad que una curva limpia.
