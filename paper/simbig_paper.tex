@@ -123,6 +123,32 @@ detections~\cite{ding2019roitransformer,yang2021r3det,xie2021orientedrcnn}.
 YOLO11 supports OBB training and inference in the Ultralytics implementation
 used here~\cite{ultralytics_obb}.
 
+Regressing the angle of an oriented box is difficult because of the
+discontinuity at the periodicity boundary. A common remedy models each box as a
+two-dimensional Gaussian and measures a distance between distributions:
+Gaussian Wasserstein distance, Kullback--Leibler divergence, and ProbIoU, which
+is based on the Hellinger distance~\cite{yang2021gwd,yang2021kld,llerena2021probiou}.
+The Ultralytics OBB validator matches predictions to annotations with ProbIoU,
+so its mAP values are not numerically identical to polygon-IoU evaluations such
+as the DOTA protocol, and we report them as Ultralytics values. Real-time
+oriented detectors outside the Ultralytics family include RTMDet, whose rotated
+variant is evaluated on DOTA~\cite{lyu2022rtmdet}. The YOLO family has also
+moved on since YOLO11, with YOLOv12 and YOLO26~\cite{tian2025yolov12,jocher2026yolo26};
+we study YOLO11n-OBB and do not compare it with these successors.
+
+Oriented boxes have been used for vehicles in aerial traffic scenes: an
+oriented detector built on YOLOv4 addresses densely arranged vehicles with
+clear orientations in aerial images~\cite{lin2022orientedyolov4}, and a
+drone-based freeway on-ramp dataset with OBB annotations supports vehicle
+trajectory extraction~\cite{wang2025frvehicle}. In Latin America, UTUAV
+provides drone video of Medell\'in, Colombia, recorded at 100 and 120 m with
+three vehicle types (cars, motorcycles, and large vehicles)~\cite{lepin2026utuav},
+and in Lima, SSD-based detectors have been retrained on street-level traffic
+video and run on a Jetson platform~\cite{ramossanchez2026jetsonlima}. In the
+sources we reviewed, none combines overhead views, oriented boxes, and the
+regional vehicle taxonomy used here (mototaxis, microbuses, minibuses, and
+articulated buses).
+
 \subsection{Efficient Inference for Edge Devices}
 
 Embedded deployment requires that model conversion and runtime behavior be
@@ -137,7 +163,16 @@ Raspberry Pi. This distinction is important because a desktop CPU measurement,
 even with a restricted number of threads, cannot characterize an ARM platform.
 Recent Raspberry Pi 4B measurements with YOLOv7-tiny similarly show that the
 target runtime and hardware configuration determine the attainable throughput
-\cite{santos2024edge}.
+\cite{santos2024edge}. Long-running tests on a Raspberry Pi 4B have shown
+thermal throttling under heavy CNN loads and compared operation with and
+without active cooling~\cite{benoitcattin2020thermal}, which is why we report
+temperature and the throttling flag. YOLOv8n and YOLOv8s have been compared on
+Jetson Orin Nano and Orin NX boards and on a Raspberry Pi 5 with post-training
+quantization~\cite{rey2025yoloedgedrone}, and YOLOv8, EfficientDet-Lite, and SSD
+models have been benchmarked across several Raspberry Pi and Jetson
+devices~\cite{alqahtani2024edgebench}. In the sources we reviewed, we did not
+find measurements of oriented-box detectors on ARM CPUs, which motivates the
+benchmark reported here.
 
 \section{Dataset and Experimental Method}
 \label{sec:dataset}
@@ -175,7 +210,8 @@ frame from each of 1,000 clips, whereas the larger subsets draw on the same
 size mostly adds frames of scenes that are already represented rather than new
 scenes. Images are grouped by clip identifier, and whole clips, rather than
 individual frames, are assigned to train, validation, or test. This prevents
-near-duplicate adjacent frames from leaking across partitions. The random seed
+near-duplicate adjacent frames from leaking across partitions, a known problem
+when frames of the same video are split at random~\cite{figueiredo2024leakage}. The random seed
 for a subset of size $n$ is $42+n$, so each subset has its own partition.
 Table~\ref{tab:splits} reports the resulting partitions.
 
@@ -492,7 +528,9 @@ size has a different clip-level test set and a single training run, and the
 larger subsets add frames from the same clips rather than new scenes. A
 stronger follow-up study would use a common fixed test set, vary the number of
 clips and the number of frames per clip separately, and repeat training over
-multiple seeds, reporting confidence intervals.
+multiple seeds, reporting confidence intervals; data sampling and parameter
+initialization are known to contribute variance comparable to the differences
+between methods~\cite{bouthillier2021variance}.
 
 The study also lacks comparisons that would establish the contribution of its
 components: no other detector architecture or model size, no horizontal-box
@@ -547,6 +585,6 @@ interests.
 \end{credits}
 
 \bibliographystyle{splncs04}
-\bibliography{references}
+\bibliography{references,references_new}
 
 \end{document}

@@ -3,46 +3,47 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: simbig_paper.aux
 The style file: splncs04.bst
 Database file #1: references.bib
+Database file #2: references_new.bib
 Warning--can't use both volume and number fields in yang2021r3det
-You've used 15 entries,
+You've used 30 entries,
             2850 wiz_defined-function locations,
-            683 strings with 7957 characters,
-and the built_in function-call counts, 9973 in all, are:
-= -- 818
-> -- 405
-< -- 14
-+ -- 165
-- -- 150
-* -- 633
-:= -- 1271
-add.period$ -- 28
-call.type$ -- 15
-change.case$ -- 138
+            773 strings with 11948 characters,
+and the built_in function-call counts, 19300 in all, are:
+= -- 1522
+> -- 820
+< -- 31
++ -- 337
+- -- 304
+* -- 1296
+:= -- 2480
+add.period$ -- 47
+call.type$ -- 30
+change.case$ -- 266
 chr.to.int$ -- 0
-cite$ -- 16
-duplicate$ -- 809
-empty$ -- 819
-format.name$ -- 161
-if$ -- 2164
+cite$ -- 31
+duplicate$ -- 1594
+empty$ -- 1579
+format.name$ -- 330
+if$ -- 4138
 int.to.chr$ -- 0
-int.to.str$ -- 15
-missing$ -- 176
-newline$ -- 51
-num.names$ -- 30
-pop$ -- 375
+int.to.str$ -- 30
+missing$ -- 353
+newline$ -- 96
+num.names$ -- 60
+pop$ -- 727
 preamble$ -- 1
-purify$ -- 105
+purify$ -- 211
 quote$ -- 0
-skip$ -- 275
+skip$ -- 498
 stack$ -- 0
-substring$ -- 537
-swap$ -- 477
-text.length$ -- 14
+substring$ -- 923
+swap$ -- 956
+text.length$ -- 31
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 60
+type$ -- 120
 warning$ -- 1
-while$ -- 70
-width$ -- 17
-write$ -- 163
+while$ -- 133
+width$ -- 32
+write$ -- 323
 (There was 1 warning)
