@@ -23,6 +23,10 @@ nav = [
     { "8. Metodología experimental" = "guia/08-metodologia.md" },
     { "Glosario" = "guia/glosario.md" },
   ] },
+  { "Plan de mejora (Q3+)" = [
+    { "Hoja de ruta" = "mejora/plan_de_mejora.md" },
+    { "Protocolo experimental" = "mejora/protocolo_experimental.md" },
+  ] },
   { "Literatura" = [
     { "Revisión de literatura" = "literatura/revision.md" },
     { "Revistas candidatas" = "literatura/revistas.md" },
