@@ -1,6 +1,23 @@
+# Datos pesados (los CSV de etiquetas SI se versionan)
 *.jpg
-.ipynb_checkpoints/
 imgs/
+yolo_datasets/
+
+# Entornos, caches y salidas de herramientas
+.venv/
+venv*/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+/runs/
+logs/
+.claude/
+
+# Pesos derivados / re-generables (models/*.pt SI se versionan; ver scripts/export_ncnn.py)
+models/_local/
+*.onnx
+last.pt
+*_ncnn_model/
 
 # Archivos auxiliares y temporales de LaTeX
 paper/*.aux
@@ -9,8 +26,8 @@ paper/*.fls
 paper/*.log
 paper/*.synctex.gz
 
-# Archivos generados automáticamente por conversiones
+# Archivos generados automaticamente por conversiones
 paper/*-eps-converted-to.pdf
 
-# Documentos compilados (opcional, pero recomendado ignorar)
+# Documentos compilados
 paper/*.pdf
