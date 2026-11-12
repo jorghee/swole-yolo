@@ -64,7 +64,7 @@ El mAP@50 (0.9394) es exactamente el promedio simple de estos 9 valores.
 
 ### Debilidades no mencionadas por los revisores
 
-1. **Fig. 2 y Fig. 3 usan validación**, no test.
+1. **Fig. 2 y Fig. 3 usaban validación**, no test. *(Corregido en la Etapa 3: `scripts/make_paper_figures.py` las regenera sobre test.)*
 2. **Motivación incorrecta**: el paper habla de vistas oblicuas y cámaras elevadas; las imágenes son **cenitales de dron**.
 3. **Subconjuntos anidados con los mismos 1 088 clips** de 1 500 en adelante.
 4. **Objetos diminutos a la resolución de entrada** (moto ≈ 3.6–4.3 px): explica `motorcycle` = 0.749 y sugiere que la resolución, no solo la cantidad de datos, es el factor crítico.
