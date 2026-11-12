@@ -26,7 +26,7 @@ Hallazgos añadidos durante la Etapa 2 (medidos sobre los datos y checkpoints re
 14. `degrees=0` (sin rotación como aumento), `optimizer=auto` sin confirmar, sin log de entrenamiento.
 15. La Tabla 3 (FPS de escritorio) varía 6 % entre modelos idénticos: es ruido; responde la pregunta del revisor 2 ("¿por qué varía el FPS?").
 16. **Convención de etiquetado:** en los ejemplos inspeccionados, vehículos estacionados fuera de la calzada no están anotados, y el modelo tampoco los predice (aprendió la convención). Falta documentar la política de anotación del dataset.
-17. **El subconjunto de 3 000 se excluyó deliberadamente** (`paper/paper_guideline.md`: "su distribución está desproporcionada"). Medido: sus proporciones por clase son prácticamente idénticas a las de los otros tamaños (auto ≈ 80 %, moto ≈ 8 % en train/val/test). La razón documentada no se sostiene con los datos; ver "Decisión pendiente" en la Etapa 3.
+17. **El subconjunto de 3 000 se excluyó deliberadamente** (`paper/paper_guideline.md`: "su distribución está desproporcionada"). Medido: sus proporciones por clase son prácticamente idénticas a las de los otros tamaños (auto ≈ 80 %, moto ≈ 8 % en train/val/test). La razón documentada no se sostiene con los datos; el equipo decidió incluirlo (Etapa 3).
 
 Repo:
 - Tres carpetas "pytorch" (`main/pytorch_implementation`, `main/pytorch-implementation`, `pytorch-implementation`), dos `particionar.py` distintos, `main/tensorflow_implementation` vacía.
@@ -52,15 +52,15 @@ Repo:
 Sitio en `docs/` (config `zensical.toml`); 8 capítulos + glosario + 3 páginas del proyecto.
 Imágenes y redes → detección (IoU, NMS, anchor-free) → métricas (P, R, AP, mAP, matriz de confusión) → OBB (parametrización, ecuación 1, DOTA) → YOLO11 y transfer learning → datos (fuga entre frames, split por clip, desbalance) → edge (ONNX, NCNN, latencia vs throughput, P95, throttling, cuantización) → diseño de experimentos y lectura de papers. Cada tema enlaza al código donde aparece.
 
-## Etapa 3: afinar el paper actual  ✅ (salvo la decisión pendiente)
-Hecho en `paper/simbig_paper.tex` (compila a 12 páginas):
+## Etapa 3: afinar el paper actual  ✅
+Hecho en `paper/simbig_paper.tex` (compila a 13 páginas):
 - [x] Figs. 2 y 3 regeneradas sobre **test** (`scripts/make_paper_figures.py`); la Tabla 5 (AP por clase) verificada contra el checkpoint.
 - [x] Punto de vista corregido: vistas aéreas cenitales (no "oblicuas" ni "cámaras elevadas").
 - [x] Revisor 2: keywords dentro del abstract, párrafo de organización, qué es NCNN y por qué se eligió, pipeline de conversión, descripción de la arquitectura, URL del código.
 - [x] Título y afirmaciones moderados ("data size", sin "controlled"); un solo run y test distinto por subset declarados en abstract, resultados y conclusión.
 - [x] Tabla 3: eliminadas las columnas de FPS de escritorio (ruido); añadido el tamaño de test por fila.
 - [x] Declarados: subconjuntos anidados y 1 088 clips, 81 % de cajas casi alineadas a ejes, objetos pequeños, convención de etiquetado, mejor checkpoint en épocas 43–50, ruido val vs test, versiones/logs no retenidos.
-- **Decisión pendiente (del equipo): subconjunto de 3 000.** Opciones: (a) incluirlo en Tabla 1/3/Fig. 1 con su resultado (0.885 mAP@50, test de 452 imágenes) y explicar la no monotonía; (b) mantener la exclusión pero **declararla** en el texto con una razón verificable. Recomendado (a): la razón documentada para excluirlo no se sostiene con los datos.
+- [x] **Subconjunto de 3 000 incluido** (decisión del equipo): Tablas 1 y 3 y Fig. 1 (`scripts/make_scaling_figure.py`), con la curva de validación como contraste (en validación 3 000 es el mejor; en test, 2 500). Abstract, discusión y conclusión actualizados.
 - Pendiente antes de enviar: volver a medir la Pi con `scripts/bench_pi.py` (Tabla 6 proviene de un script perdido); comprobar que el repositorio sea público y contenga el estado final; ajustar la longitud al formato de la sede.
 - Opcional: preprint en arXiv.
 
