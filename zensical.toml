@@ -23,6 +23,11 @@ nav = [
     { "8. Metodología experimental" = "guia/08-metodologia.md" },
     { "Glosario" = "guia/glosario.md" },
   ] },
+  { "Literatura" = [
+    { "Revisión de literatura" = "literatura/revision.md" },
+    { "Revistas candidatas" = "literatura/revistas.md" },
+    { "Fuentes no verificadas" = "literatura/no_verificado.md" },
+  ] },
   { "El proyecto" = [
     { "Arquitectura del código" = "proyecto/arquitectura.md" },
     { "Reproducir los resultados" = "proyecto/reproduccion.md" },

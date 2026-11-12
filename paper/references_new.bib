@@ -1,0 +1,709 @@
+% references_new.bib
+% New references verified by web search/fetch on 2026-11-11 (title, authors, year, venue, DOI/URL).
+% Only verified entries. Where the full author list could not be confirmed, the verified
+% names are given followed by "and others". Fields that could not be confirmed (pages,
+% volume, DOI) are intentionally left out; see docs/literatura/no_verificado.md.
+% Do NOT merge blindly with references.bib: entries already cited in the paper
+% (DOTA, YOLO, COCO, UA-DETRAC, BDD100K, VisDrone 2018, RoI Transformer, R3Det,
+% Oriented R-CNN, NCNN, Ultralytics docs, Santos 2024) are not repeated here.
+
+% ---------------------------------------------------------------------------
+% A. Oriented object detection and YOLO-OBB
+% ---------------------------------------------------------------------------
+
+@misc{llerena2021probiou,
+  author        = {Llerena, Jeffri M. and Zeni, Luis Felipe and Kirsten, Lucas N. and Jung, Claudio},
+  title         = {Gaussian Bounding Boxes and Probabilistic Intersection-over-Union for Object Detection},
+  year          = {2021},
+  eprint        = {2106.06072},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.CV},
+  url           = {https://arxiv.org/abs/2106.06072},
+  note          = {arXiv journal reference: IEEE Transactions on Image Processing, vol. 33, pp. 671--681, 2024}
+}
+
+@inproceedings{yang2021gwd,
+  author    = {Yang, Xue and Yan, Junchi and Ming, Qi and Wang, Wentao and Zhang, Xiaopeng and Tian, Qi},
+  title     = {Rethinking Rotated Object Detection with {G}aussian {W}asserstein Distance Loss},
+  booktitle = {Proceedings of the 38th International Conference on Machine Learning (ICML)},
+  series    = {Proceedings of Machine Learning Research},
+  volume    = {139},
+  pages     = {11830--11841},
+  year      = {2021},
+  url       = {https://arxiv.org/abs/2101.11952}
+}
+
+@inproceedings{yang2021kld,
+  author    = {Yang, Xue and Yang, Xiaojiang and Yang, Jirui and Ming, Qi and Wang, Wentao and Tian, Qi and Yan, Junchi},
+  title     = {Learning High-Precision Bounding Box for Rotated Object Detection via {K}ullback-{L}eibler Divergence},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2021},
+  url       = {https://arxiv.org/abs/2106.01883}
+}
+
+@inproceedings{yang2023kfiou,
+  author    = {Yang, Xue and others},
+  title     = {The {KFIoU} Loss for Rotated Object Detection},
+  booktitle = {International Conference on Learning Representations (ICLR)},
+  year      = {2023},
+  url       = {https://arxiv.org/abs/2201.12558}
+}
+
+@inproceedings{yang2020csl,
+  author    = {Yang, Xue and Yan, Junchi},
+  title     = {Arbitrary-Oriented Object Detection with Circular Smooth Label},
+  booktitle = {Computer Vision -- ECCV 2020},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {12353},
+  publisher = {Springer},
+  year      = {2020},
+  doi       = {10.1007/978-3-030-58598-3_40},
+  url       = {https://arxiv.org/abs/2003.05597}
+}
+
+@inproceedings{han2021redet,
+  author    = {Han, Jiaming and Ding, Jian and Xue, Nan and Xia, Gui-Song},
+  title     = {{ReDet}: A Rotation-Equivariant Detector for Aerial Object Detection},
+  booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+  pages     = {2786--2795},
+  year      = {2021},
+  doi       = {10.1109/CVPR46437.2021.00281},
+  url       = {https://arxiv.org/abs/2103.07733}
+}
+
+@article{han2022s2anet,
+  author  = {Han, Jiaming and Ding, Jian and Li, Jie and Xia, Gui-Song},
+  title   = {Align Deep Features for Oriented Object Detection},
+  journal = {IEEE Transactions on Geoscience and Remote Sensing},
+  volume  = {60},
+  pages   = {1--11},
+  year    = {2022},
+  doi     = {10.1109/TGRS.2021.3062048},
+  url     = {https://arxiv.org/abs/2008.09397}
+}
+
+@inproceedings{li2023lsknet,
+  author    = {Li, Yuxuan and Hou, Qibin and Zheng, Zhaohui and Cheng, Ming-Ming and Yang, Jian and Li, Xiang},
+  title     = {Large Selective Kernel Network for Remote Sensing Object Detection},
+  booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},
+  pages     = {16794--16805},
+  year      = {2023},
+  doi       = {10.1109/ICCV51070.2023.01540},
+  url       = {https://arxiv.org/abs/2303.09030}
+}
+
+@misc{lyu2022rtmdet,
+  author        = {Lyu, Chengqi and Zhang, Wenwei and others},
+  title         = {{RTMDet}: An Empirical Study of Designing Real-Time Object Detectors},
+  year          = {2022},
+  eprint        = {2212.07784},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.CV},
+  url           = {https://arxiv.org/abs/2212.07784}
+}
+
+@misc{wang2022ppyoloer,
+  author        = {Wang, Xinxin and Wang, Guanzhong and Dang, Qingqing and Liu, Yi and Hu, Xiaoguang and Yu, Dianhai},
+  title         = {{PP-YOLOE-R}: An Efficient Anchor-Free Rotated Object Detector},
+  year          = {2022},
+  eprint        = {2211.02386},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.CV},
+  url           = {https://arxiv.org/abs/2211.02386}
+}
+
+@inproceedings{zhou2022mmrotate,
+  author    = {Zhou, Yue and Yang, Xue and Zhang, Gefan and Wang, Jiabao and Liu, Yanyi and Hou, Liping and Jiang, Xue and Liu, Xingzhao and Yan, Junchi and Lyu, Chengqi and Zhang, Wenwei and Chen, Kai},
+  title     = {{MMRotate}: A Rotated Object Detection Benchmark using {PyTorch}},
+  booktitle = {Proceedings of the 30th ACM International Conference on Multimedia (MM '22)},
+  year      = {2022},
+  doi       = {10.1145/3503161.3548541},
+  url       = {https://arxiv.org/abs/2204.13317}
+}
+
+@misc{khanam2024yolov11,
+  author        = {Khanam, Rahima and Hussain, Muhammad},
+  title         = {{YOLOv11}: An Overview of the Key Architectural Enhancements},
+  year          = {2024},
+  eprint        = {2410.17725},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.CV},
+  url           = {https://arxiv.org/abs/2410.17725}
+}
+
+@misc{tian2025yolov12,
+  author        = {Tian, Yunjie and Ye, Qixiang and Doermann, David},
+  title         = {{YOLOv12}: Attention-Centric Real-Time Object Detectors},
+  year          = {2025},
+  eprint        = {2502.12524},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.CV},
+  url           = {https://arxiv.org/abs/2502.12524}
+}
+
+@misc{wang2024yolov10,
+  author        = {Wang, Ao and Chen, Hui and Liu, Lihao and Chen, Kai and Lin, Zijia and Han, Jungong and Ding, Guiguang},
+  title         = {{YOLOv10}: Real-Time End-to-End Object Detection},
+  year          = {2024},
+  eprint        = {2405.14458},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.CV},
+  url           = {https://arxiv.org/abs/2405.14458}
+}
+
+@misc{jocher2026yolo26,
+  author        = {Jocher, Glenn and Qiu, Jing and Liu, Mengyu and Lyu, Shuai and Akyon, Fatih Cagatay and Kalfaoglu, Muhammet Esat},
+  title         = {Ultralytics {YOLO26}: Unified Real-Time End-to-End Vision Models},
+  year          = {2026},
+  eprint        = {2606.03748},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.CV},
+  url           = {https://arxiv.org/abs/2606.03748}
+}
+
+@inproceedings{zhao2024rtdetr,
+  author    = {Zhao, Yian and Lv, Wenyu and Xu, Shangliang and Wei, Jinman and Wang, Guanzhong and Dang, Qingqing and Liu, Yi and Chen, Jie},
+  title     = {{DETRs} Beat {YOLOs} on Real-Time Object Detection},
+  booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+  pages     = {16965--16974},
+  year      = {2024},
+  doi       = {10.1109/CVPR52733.2024.01605},
+  url       = {https://arxiv.org/abs/2304.08069}
+}
+
+@article{ding2026o2rtdetr,
+  author  = {Ding, Zeyu and Zhou, Yong and Zhao, Jiaqi and Du, Wen-Liang and Li, Xixi and Yao, Rui and El Saddik, Abdulmotaleb},
+  title   = {Real-Time Oriented Object Detection Transformer in Remote Sensing Images},
+  journal = {IEEE Transactions on Geoscience and Remote Sensing},
+  year    = {2026},
+  doi     = {10.1109/TGRS.2026.3671683},
+  url     = {https://arxiv.org/abs/2603.15497}
+}
+
+@article{terven2023yoloreview,
+  author  = {Terven, Juan and C{\'o}rdova-Esparza, Diana-Margarita and Romero-Gonz{\'a}lez, Julio-Alejandro},
+  title   = {A Comprehensive Review of {YOLO} Architectures in Computer Vision: From {YOLOv1} to {YOLOv8} and {YOLO-NAS}},
+  journal = {Machine Learning and Knowledge Extraction},
+  volume  = {5},
+  number  = {4},
+  pages   = {1680--1716},
+  year    = {2023},
+  doi     = {10.3390/make5040083}
+}
+
+@misc{hidayatullah2025yolov8to11,
+  author        = {Hidayatullah, Priyanto and Syakrani, Nurjannah and Sholahuddin, Muhammad Rizqi and Gelar, Trisna and Tubagus, Refdinal},
+  title         = {{YOLOv8} to {YOLO11}: A Comprehensive Architecture In-depth Comparative Review},
+  year          = {2025},
+  eprint        = {2501.13400},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.CV},
+  url           = {https://arxiv.org/abs/2501.13400},
+  note          = {Journal version published under a different title in Jurnal RESTI 10(2), 2026, doi:10.29207/resti.v10i2.6598}
+}
+
+@article{lin2022orientedyolov4,
+  author  = {Lin, Tai-Hung and Su, Chih-Wen},
+  title   = {Oriented Vehicle Detection in Aerial Images Based on {YOLOv4}},
+  journal = {Sensors},
+  volume  = {22},
+  number  = {21},
+  pages   = {8394},
+  year    = {2022},
+  doi     = {10.3390/s22218394}
+}
+
+@article{wang2025frvehicle,
+  author  = {Wang, Zhenyu and Xiong, Lu and Yu, Zhuoping},
+  title   = {An Asymmetric Selective Kernel Network for Drone-Based Vehicle Detection to Build a High-Accuracy Vehicle Trajectory Dataset},
+  journal = {Remote Sensing},
+  volume  = {17},
+  number  = {3},
+  pages   = {407},
+  year    = {2025},
+  doi     = {10.3390/rs17030407}
+}
+
+% ---------------------------------------------------------------------------
+% B. Vehicle detection in drone/aerial imagery, small objects, regional traffic
+% ---------------------------------------------------------------------------
+
+@article{sun2022dronevehicle,
+  author  = {Sun, Yiming and Cao, Bing and Zhu, Pengfei and Hu, Qinghua},
+  title   = {Drone-Based {RGB}-Infrared Cross-Modality Vehicle Detection via Uncertainty-Aware Learning},
+  journal = {IEEE Transactions on Circuits and Systems for Video Technology},
+  volume  = {32},
+  number  = {10},
+  pages   = {6700--6713},
+  year    = {2022},
+  doi     = {10.1109/TCSVT.2022.3168279},
+  url     = {https://arxiv.org/abs/2003.02437}
+}
+
+@inproceedings{du2018uavdt,
+  author    = {Du, Dawei and Qi, Yuankai and Yu, Hongyang and Yang, Yifan and Duan, Kaiwen and Li, Guorong and Zhang, Weigang and Huang, Qingming and Tian, Qi},
+  title     = {The Unmanned Aerial Vehicle Benchmark: Object Detection and Tracking},
+  booktitle = {Computer Vision -- ECCV 2018},
+  publisher = {Springer},
+  year      = {2018},
+  doi       = {10.1007/978-3-030-01249-6_23},
+  url       = {https://arxiv.org/abs/1804.00518}
+}
+
+@inproceedings{wang2021aitod,
+  author    = {Wang, Jinwang and Yang, Wen and Guo, Haowen and Zhang, Ruixiang and Xia, Gui-Song},
+  title     = {Tiny Object Detection in Aerial Images},
+  booktitle = {2020 25th International Conference on Pattern Recognition (ICPR)},
+  pages     = {3791--3798},
+  year      = {2021},
+  doi       = {10.1109/ICPR48806.2021.9413340}
+}
+
+@article{zhu2022visdronechallenge,
+  author  = {Zhu, Pengfei and Wen, Longyin and Du, Dawei and others},
+  title   = {Detection and Tracking Meet Drones Challenge},
+  journal = {IEEE Transactions on Pattern Analysis and Machine Intelligence},
+  volume  = {44},
+  number  = {11},
+  pages   = {7380--7399},
+  year    = {2022},
+  doi     = {10.1109/TPAMI.2021.3119563},
+  url     = {https://arxiv.org/abs/2001.06303}
+}
+
+@article{cheng2023soda,
+  author  = {Cheng, Gong and Yuan, Xiang and Yao, Xiwen and Yan, Kebing and Zeng, Qinghua and Xie, Xingxing and Han, Junwei},
+  title   = {Towards Large-Scale Small Object Detection: Survey and Benchmarks},
+  journal = {IEEE Transactions on Pattern Analysis and Machine Intelligence},
+  volume  = {45},
+  number  = {11},
+  pages   = {13467--13488},
+  year    = {2023},
+  doi     = {10.1109/TPAMI.2023.3290594},
+  url     = {https://arxiv.org/abs/2207.14096}
+}
+
+@inproceedings{akyon2022sahi,
+  author    = {Akyon, Fatih Cagatay and Altinuc, Sinan Onur and Temizel, Alptekin},
+  title     = {Slicing Aided Hyper Inference and Fine-Tuning for Small Object Detection},
+  booktitle = {2022 IEEE International Conference on Image Processing (ICIP)},
+  pages     = {966--970},
+  year      = {2022},
+  doi       = {10.1109/ICIP46576.2022.9897990},
+  url       = {https://arxiv.org/abs/2202.06934}
+}
+
+@misc{wang2021nwd,
+  author        = {Wang, Jinwang and Xu, Chang and Yang, Wen and Yu, Lei},
+  title         = {A Normalized {G}aussian {W}asserstein Distance for Tiny Object Detection},
+  year          = {2021},
+  eprint        = {2110.13389},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.CV},
+  url           = {https://arxiv.org/abs/2110.13389}
+}
+
+@inproceedings{zhu2021tphyolov5,
+  author    = {Zhu, Xingkui and Lyu, Shuchang and Wang, Xu and Zhao, Qi},
+  title     = {{TPH-YOLOv5}: Improved {YOLOv5} Based on Transformer Prediction Head for Object Detection on Drone-Captured Scenarios},
+  booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision Workshops (ICCVW)},
+  pages     = {2778--2788},
+  year      = {2021},
+  doi       = {10.1109/ICCVW54120.2021.00312},
+  url       = {https://arxiv.org/abs/2108.11539}
+}
+
+@article{zhang2023droneyolo,
+  author  = {Zhang, Zhengxin},
+  title   = {{Drone-YOLO}: An Efficient Neural Network Method for Target Detection in Drone Images},
+  journal = {Drones},
+  volume  = {7},
+  number  = {8},
+  pages   = {526},
+  year    = {2023},
+  doi     = {10.3390/drones7080526}
+}
+
+@article{zhang2025dscwyolo,
+  author  = {Zhang, Qingqi and Wang, Hao and Wang, Xinbo and Shang, Jiapeng and Wang, Xiaoli and Li, Jie and Wang, Yan},
+  title   = {{DSCW-YOLO}: Vehicle Detection from Low-Altitude {UAV} Perspective via Coordinate Awareness and Collaborative Module Optimization},
+  journal = {Sensors},
+  volume  = {25},
+  number  = {11},
+  pages   = {3413},
+  year    = {2025},
+  doi     = {10.3390/s25113413}
+}
+
+@article{lepin2026utuav,
+  author  = {Lepin, Felipe and Velastin, Sergio A. and Le{\'o}n, Roberto and Garc{\'i}a-Herrero, Jes{\'u}s and Rojas-Mart{\'i}nez, Gonzalo and Espinosa-Oviedo, Jorge Ernesto},
+  title   = {{UTUAV}: A Drone Dataset for Urban Traffic Analysis},
+  journal = {Drones},
+  volume  = {10},
+  number  = {1},
+  pages   = {15},
+  year    = {2026},
+  doi     = {10.3390/drones10010015}
+}
+
+@misc{lee2025drift,
+  author        = {Lee, Hyejin and Hong, Seokjun and Song, Jeonghoon and Cho, Haechan and Jin, Zhixiong and Kim, Byeonghun and Jin, Joobin and Im, Jaegyun and Noh, Byeongjoon and Yeo, Hwasoo},
+  title         = {{DRIFT} Open Dataset: A Drone-Derived Intelligence for Traffic Analysis in Urban Environment},
+  year          = {2025},
+  eprint        = {2504.11019},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.CV},
+  url           = {https://arxiv.org/abs/2504.11019}
+}
+
+@article{zheng2024citysim,
+  author  = {Zheng, Ou and Abdel-Aty, Mohamed and Yue, Lishengsa and Abdelraouf, Amr and Wang, Zijin and Mahmoud, Nada},
+  title   = {{CitySim}: A Drone-Based Vehicle Trajectory Dataset for Safety-Oriented Research and Digital Twins},
+  journal = {Transportation Research Record},
+  year    = {2024},
+  doi     = {10.1177/03611981231185768},
+  url     = {https://arxiv.org/abs/2208.11036},
+  note    = {Year from Crossref (print); published online 2023. Volume/issue/pages not confirmed against the publisher page}
+}
+
+@article{ramossanchez2026jetsonlima,
+  author  = {Ramos-Sanchez, Sleiter and Lezama, Jinmi and Yauri, Ricardo and Zevallos, Joyce},
+  title   = {Object Detection on Road: Vehicle's Detection Based on Re-Training Models on {NVIDIA-Jetson} Platform},
+  journal = {Journal of Imaging},
+  volume  = {12},
+  number  = {1},
+  pages   = {20},
+  year    = {2026},
+  doi     = {10.3390/jimaging12010020}
+}
+
+@article{salcedodelgado2026yucatan,
+  author  = {Salcedo-Delgado, Jos{\'e} A. and Hernandez-Lopez, Francisco J. and Mu{\~n}iz-S{\'a}nchez, Victor and Forti-Sosa, Silvana and P{\'e}rez-Pech, Eduardo and Batard, Thomas and Hayet, Jean B.},
+  title   = {Automatic Counting of Moving Vehicles and Pedestrians from {UAVs}: A Case Study for Cities in {Y}ucat{\'a}n, {M}exico},
+  journal = {International Journal of Intelligent Transportation Systems Research},
+  year    = {2026},
+  doi     = {10.1007/s13177-026-00663-4}
+}
+
+@article{ye2026uavreview,
+  author  = {Ye, Jianlin and Kyrkou, Christos},
+  title   = {A Review of Vision-Based Vehicle Detection for {UAV}-Based Traffic Monitoring: Experimental Insights and Future Directions},
+  journal = {IEEE Transactions on Intelligent Transportation Systems},
+  year    = {2026},
+  doi     = {10.1109/TITS.2026.3696046},
+  url     = {https://arxiv.org/abs/2608.07571}
+}
+
+@misc{wang2026vrud,
+  author        = {Wang, Ziyu and Kou, Hongrui and Wang, Cheng and Li, Ruochen and Shum, Hubert P. H. and Atapour-Abarghouei, Amir and Zhang, Yuxin},
+  title         = {{VRUD}: A Drone Dataset for Complex Vehicle-{VRU} Interactions within Mixed Traffic},
+  year          = {2026},
+  eprint        = {2604.01134},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.RO},
+  url           = {https://arxiv.org/abs/2604.01134}
+}
+
+% ---------------------------------------------------------------------------
+% C. Edge deployment
+% ---------------------------------------------------------------------------
+
+@article{benoitcattin2020thermal,
+  author  = {Benoit-Cattin, Th{\'e}o and Velasco-Montero, Delia and Fern{\'a}ndez-Berni, Jorge},
+  title   = {Impact of Thermal Throttling on Long-Term Visual Inference in a {CPU}-Based Edge Device},
+  journal = {Electronics},
+  volume  = {9},
+  number  = {12},
+  pages   = {2106},
+  year    = {2020},
+  doi     = {10.3390/electronics9122106},
+  url     = {https://arxiv.org/abs/2010.06291}
+}
+
+@article{rey2025yoloedgedrone,
+  author  = {Rey, Lucas and Bernardos, Ana M. and Dobrzycki, Andrzej D. and Carrami{\~n}ana, David and Bergesio, Luca and Besada, Juan A. and Casar, Jos{\'e} Ram{\'o}n},
+  title   = {A Performance Analysis of You Only Look Once Models for Deployment on Constrained Computational Edge Devices in Drone Applications},
+  journal = {Electronics},
+  volume  = {14},
+  number  = {3},
+  pages   = {638},
+  year    = {2025},
+  doi     = {10.3390/electronics14030638},
+  url     = {https://arxiv.org/abs/2502.15737}
+}
+
+@misc{alqahtani2024edgebench,
+  author        = {Alqahtani, Daghash K. and Cheema, Muhammad Aamir and Rodriguez, Maria A. and Toosi, Adel N.},
+  title         = {A Comprehensive Evaluation of Deep Learning Object Detection Models on Heterogeneous Edge Devices},
+  year          = {2024},
+  eprint        = {2409.16808},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.CV},
+  url           = {https://arxiv.org/abs/2409.16808}
+}
+
+@article{andika2024yolov7tinyvehicle,
+  author  = {Andika, Johan Lela and Khairuddin, Anis Salwa Mohd and Ramiah, Harikrishnan and Kanesan, Jeevan},
+  title   = {Improved Feature Extraction Network in Lightweight {YOLOv7} Model for Real-Time Vehicle Detection on Low-Cost Hardware},
+  journal = {Journal of Real-Time Image Processing},
+  volume  = {21},
+  number  = {3},
+  pages   = {77},
+  year    = {2024},
+  doi     = {10.1007/s11554-024-01457-1}
+}
+
+@article{aljami2026yolov8orinnx,
+  author  = {Aljami, Hadeel Muhammad and Alrowais, Nouf Abdullah and AlAwajy, Anfal Mohsen and Alhrgan, Shog Osama and Aldwaani, Raghad Abdullah and Alsawadi, Motasem Samer and Saqib, Najam Us and Alam, Syed Salman and Alsubaie, Reem},
+  title   = {Benchmarking {YOLOv8} Variants for Object Detection Efficiency on {J}etson {O}rin {NX} for Edge Computing Applications},
+  journal = {Computers},
+  volume  = {15},
+  number  = {2},
+  pages   = {74},
+  year    = {2026},
+  doi     = {10.3390/computers15020074}
+}
+
+@misc{karimov2025quantrobust,
+  author        = {Karimov, Toghrul and Imani, Hassan and Kazakov, Allan},
+  title         = {Quantization Robustness to Input Degradations for Object Detection},
+  year          = {2025},
+  eprint        = {2508.19600},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.CV},
+  url           = {https://arxiv.org/abs/2508.19600}
+}
+
+@inproceedings{jacob2018quantization,
+  author    = {Jacob, Benoit and Kligys, Skirmantas and Chen, Bo and Zhu, Menglong and Tang, Matthew and Howard, Andrew and Adam, Hartwig and Kalenichenko, Dmitry},
+  title     = {Quantization and Training of Neural Networks for Efficient Integer-Arithmetic-Only Inference},
+  booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+  pages     = {2704--2713},
+  year      = {2018},
+  doi       = {10.1109/CVPR.2018.00286},
+  url       = {https://arxiv.org/abs/1712.05877}
+}
+
+@inproceedings{reddi2020mlperf,
+  author    = {Reddi, Vijay Janapa and Cheng, Christine and Kanter, David and Mattson, Peter and Schmuelling, Guenther and others},
+  title     = {{MLPerf} Inference Benchmark},
+  booktitle = {2020 ACM/IEEE 47th Annual International Symposium on Computer Architecture (ISCA)},
+  pages     = {446--459},
+  year      = {2020},
+  doi       = {10.1109/ISCA45697.2020.00045},
+  url       = {https://arxiv.org/abs/1911.02549}
+}
+
+% ---------------------------------------------------------------------------
+% D. Data efficiency, pre-training, leakage, variance
+% ---------------------------------------------------------------------------
+
+@inproceedings{he2019rethinking,
+  author    = {He, Kaiming and Girshick, Ross and Doll{\'a}r, Piotr},
+  title     = {Rethinking {ImageNet} Pre-Training},
+  booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},
+  pages     = {4918--4927},
+  year      = {2019},
+  doi       = {10.1109/ICCV.2019.00502},
+  url       = {https://arxiv.org/abs/1811.08883}
+}
+
+@inproceedings{sun2017unreasonable,
+  author    = {Sun, Chen and Shrivastava, Abhinav and Singh, Saurabh and Gupta, Abhinav},
+  title     = {Revisiting Unreasonable Effectiveness of Data in Deep Learning Era},
+  booktitle = {Proceedings of the IEEE International Conference on Computer Vision (ICCV)},
+  pages     = {843--852},
+  year      = {2017},
+  url       = {https://arxiv.org/abs/1707.02968}
+}
+
+@inproceedings{mahmood2022howmuchdata,
+  author    = {Mahmood, Rafid and Lucas, James and Acuna, David and Li, Daiqing and Philion, Jonah and Alvarez, Jose M. and Yu, Zhiding and Fidler, Sanja and Law, Marc T.},
+  title     = {How Much More Data Do {I} Need? {E}stimating Requirements for Downstream Tasks},
+  booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+  pages     = {275--284},
+  year      = {2022},
+  doi       = {10.1109/CVPR52688.2022.00037},
+  url       = {https://arxiv.org/abs/2207.01725}
+}
+
+@inproceedings{wang2020tfa,
+  author    = {Wang, Xin and Huang, Thomas and Gonzalez, Joseph and Darrell, Trevor and Yu, Fisher},
+  title     = {Frustratingly Simple Few-Shot Object Detection},
+  booktitle = {Proceedings of the 37th International Conference on Machine Learning (ICML)},
+  series    = {Proceedings of Machine Learning Research},
+  volume    = {119},
+  pages     = {9919--9928},
+  year      = {2020},
+  url       = {https://proceedings.mlr.press/v119/wang20j.html}
+}
+
+@article{wang2023rsp,
+  author  = {Wang, Di and Zhang, Jing and Du, Bo and Xia, Gui-Song and Tao, Dacheng},
+  title   = {An Empirical Study of Remote Sensing Pretraining},
+  journal = {IEEE Transactions on Geoscience and Remote Sensing},
+  volume  = {61},
+  year    = {2023},
+  doi     = {10.1109/TGRS.2022.3176603},
+  url     = {https://arxiv.org/abs/2204.02825}
+}
+
+@article{figueiredo2024leakage,
+  author  = {Figueiredo, Ravi B. D. and Mendes, Hugo A.},
+  title   = {Analyzing Information Leakage on Video Object Detection Datasets by Splitting Images Into Clusters With High Spatiotemporal Correlation},
+  journal = {IEEE Access},
+  volume  = {12},
+  pages   = {47646--47655},
+  year    = {2024},
+  doi     = {10.1109/ACCESS.2024.3383047}
+}
+
+@misc{glazner2025findleak,
+  author        = {Glazner, Noam and Tsfaty, Noam and Shalev, Sharon and Weizman, Avishai},
+  title         = {Find the Leak, Fix the Split: Cluster-Based Method to Prevent Leakage in Video-Derived Datasets},
+  year          = {2025},
+  eprint        = {2511.13944},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.CV},
+  url           = {https://arxiv.org/abs/2511.13944},
+  note          = {Accepted to ICSEE 2026 according to the arXiv comments field}
+}
+
+@inproceedings{bouthillier2021variance,
+  author    = {Bouthillier, Xavier and Delaunay, Pierre and Bronzi, Mirko and Trofimov, Assya and Nichyporuk, Brennan and Szeto, Justin and Sepah, Naz and Raff, Edward and Madan, Kanika and Voleti, Vikram and Kahou, Samira Ebrahimi and Michalski, Vincent and Serdyuk, Dmitriy and Arbel, Tal and Pal, Chris and Varoquaux, Ga{\"e}l and Vincent, Pascal},
+  title     = {Accounting for Variance in Machine Learning Benchmarks},
+  booktitle = {Proceedings of Machine Learning and Systems (MLSys)},
+  volume    = {3},
+  year      = {2021},
+  url       = {https://arxiv.org/abs/2103.03098}
+}
+
+% ---------------------------------------------------------------------------
+% E. Tracking and counting
+% ---------------------------------------------------------------------------
+
+@inproceedings{bewley2016sort,
+  author    = {Bewley, Alex and Ge, Zongyuan and Ott, Lionel and Ramos, Fabio and Upcroft, Ben},
+  title     = {Simple Online and Realtime Tracking},
+  booktitle = {2016 IEEE International Conference on Image Processing (ICIP)},
+  pages     = {3464--3468},
+  year      = {2016},
+  doi       = {10.1109/ICIP.2016.7533003},
+  url       = {https://arxiv.org/abs/1602.00763}
+}
+
+@inproceedings{wojke2017deepsort,
+  author    = {Wojke, Nicolai and Bewley, Alex and Paulus, Dietrich},
+  title     = {Simple Online and Realtime Tracking with a Deep Association Metric},
+  booktitle = {2017 IEEE International Conference on Image Processing (ICIP)},
+  pages     = {3645--3649},
+  year      = {2017},
+  doi       = {10.1109/ICIP.2017.8296962},
+  url       = {https://arxiv.org/abs/1703.07402}
+}
+
+@inproceedings{zhang2022bytetrack,
+  author    = {Zhang, Yifu and Sun, Peize and Jiang, Yi and Yu, Dongdong and Weng, Fucheng and Yuan, Zehuan and Luo, Ping and Liu, Wenyu and Wang, Xinggang},
+  title     = {{ByteTrack}: Multi-Object Tracking by Associating Every Detection Box},
+  booktitle = {Computer Vision -- ECCV 2022},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {13682},
+  pages     = {1--21},
+  publisher = {Springer},
+  year      = {2022},
+  doi       = {10.1007/978-3-031-20047-2_1},
+  url       = {https://arxiv.org/abs/2110.06864}
+}
+
+@misc{aharon2022botsort,
+  author        = {Aharon, Nir and Orfaig, Roy and Bobrovsky, Ben-Zion},
+  title         = {{BoT-SORT}: Robust Associations Multi-Pedestrian Tracking},
+  year          = {2022},
+  eprint        = {2206.14651},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.CV},
+  url           = {https://arxiv.org/abs/2206.14651}
+}
+
+@inproceedings{cao2023ocsort,
+  author    = {Cao, Jinkun and Pang, Jiangmiao and Weng, Xinshuo and Khirodkar, Rawal and Kitani, Kris},
+  title     = {Observation-Centric {SORT}: Rethinking {SORT} for Robust Multi-Object Tracking},
+  booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+  year      = {2023},
+  url       = {https://arxiv.org/abs/2203.14360}
+}
+
+@inproceedings{liu2022uavmot,
+  author    = {Liu, Shuai and Li, Xin and Lu, Huchuan and He, You},
+  title     = {Multi-Object Tracking Meets Moving {UAV}},
+  booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+  year      = {2022},
+  doi       = {10.1109/CVPR52688.2022.00867}
+}
+
+@article{luiten2021hota,
+  author  = {Luiten, Jonathon and O{\v{s}}ep, Aljo{\v{s}}a and Dendorfer, Patrick and Torr, Philip and Geiger, Andreas and Leal-Taix{\'e}, Laura and Leibe, Bastian},
+  title   = {{HOTA}: A Higher Order Metric for Evaluating Multi-Object Tracking},
+  journal = {International Journal of Computer Vision},
+  volume  = {129},
+  number  = {2},
+  pages   = {548--578},
+  year    = {2021},
+  doi     = {10.1007/s11263-020-01375-2}
+}
+
+@article{xiang2018aerialcounting,
+  author  = {Xiang, Xuezhi and Zhai, Mingliang and Lv, Ning and El Saddik, Abdulmotaleb},
+  title   = {Vehicle Counting Based on Vehicle Detection and Tracking from Aerial Videos},
+  journal = {Sensors},
+  volume  = {18},
+  number  = {8},
+  pages   = {2560},
+  year    = {2018},
+  doi     = {10.3390/s18082560}
+}
+
+@article{gellidacoutino2025occluded,
+  author  = {Gellida-Coutino, Carlos and Rios-Cabrera, Reyes and Maldonado-Ramirez, Alan and Sanchez-Orta, Anand},
+  title   = {Robust Drone Video Analysis for Occluded Urban Traffic Monitoring Based on Deep Learning},
+  journal = {IEEE Access},
+  year    = {2025},
+  url     = {https://ieeexplore.ieee.org/document/11048557/},
+  note    = {Existence and authors confirmed by web search (IEEE Xplore document 11048557, DOAJ record); DOI, volume and pages not confirmed}
+}
+
+% ---------------------------------------------------------------------------
+% F. Evaluation methodology and reproducibility
+% ---------------------------------------------------------------------------
+
+@article{padilla2021metrics,
+  author  = {Padilla, Rafael and Passos, Wesley L. and Dias, Thadeu L. B. and Netto, Sergio L. and da Silva, Eduardo A. B.},
+  title   = {A Comparative Analysis of Object Detection Metrics with a Companion Open-Source Toolkit},
+  journal = {Electronics},
+  volume  = {10},
+  number  = {3},
+  pages   = {279},
+  year    = {2021},
+  doi     = {10.3390/electronics10030279}
+}
+
+@inproceedings{bolya2020tide,
+  author    = {Bolya, Daniel and Foley, Sean and Hays, James and Hoffman, Judy},
+  title     = {{TIDE}: A General Toolbox for Identifying Object Detection Errors},
+  booktitle = {Computer Vision -- ECCV 2020},
+  publisher = {Springer},
+  year      = {2020},
+  doi       = {10.1007/978-3-030-58580-8_33},
+  url       = {https://arxiv.org/abs/2008.08115}
+}
+
+@article{pineau2021reproducibility,
+  author  = {Pineau, Joelle and Vincent-Lamarre, Philippe and Sinha, Koustuv and Larivi{\`e}re, Vincent and Beygelzimer, Alina and d'Alch{\'e}-Buc, Florence and Fox, Emily and Larochelle, Hugo},
+  title   = {Improving Reproducibility in Machine Learning Research (A Report from the {NeurIPS} 2019 Reproducibility Program)},
+  journal = {Journal of Machine Learning Research},
+  volume  = {22},
+  number  = {164},
+  pages   = {1--20},
+  year    = {2021},
+  url     = {https://jmlr.org/papers/v22/20-303.html}
+}
