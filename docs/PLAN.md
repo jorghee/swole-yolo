@@ -64,8 +64,15 @@ Hecho en `paper/simbig_paper.tex` (compila a 13 páginas):
 - Pendiente antes de enviar: volver a medir la Pi con `scripts/bench_pi.py` (Tabla 6 proviene de un script perdido); comprobar que el repositorio sea público y contenga el estado final; ajustar la longitud al formato de la sede.
 - Opcional: preprint en arXiv.
 
-## Etapa 4: revisión de literatura (últimos 3-5 años)
-YOLO-OBB y detección rotada liviana; detección vehicular en Latinoamérica; YOLO en Raspberry Pi/Jetson/NCNN; estudios de data scaling; tracking y conteo (ByteTrack, BoT-SORT). Tabla por fuente: método, dataset, métricas, hardware, diferencia con nuestro trabajo. Elegir revistas objetivo verificando cuartil en SJR/Scimago.
+## Etapa 4: revisión de literatura (últimos 3-5 años)  ✅ (cuartiles pendientes de confirmar a mano)
+Búsqueda delegada a un agente (Fable 5.2, esfuerzo medio) y **verificada por el equipo** contra Crossref/arXiv: 66 fuentes, todas existen; 3 entradas corregidas. Resultados en `docs/literatura/` (`revision.md`, `revistas.md`, `no_verificado.md`) y `paper/references_new.bib`. El *Related Work* del paper se amplió con 15 fuentes nuevas (compila a 15 páginas).
+
+Hallazgos de posicionamiento:
+- **No defendibles como novedad:** el split por clips (Figueiredo y Mendes 2024; UTUAV) y "primer dataset de dron latinoamericano" (UTUAV, Colombia; YucaMex-Drone, México).
+- **Defendibles con experimentos:** taxonomía peruana de 9 clases con OBB en vista cenital; OBB vs HBB cuando 81 % de las cajas están alineadas a ejes (no se encontró estudio controlado); caracterización de OBB en CPU ARM con protocolo térmico (no se encontraron mediciones); curva de aprendizaje bien diseñada en clips.
+- **Riesgo metodológico:** Ultralytics valida OBB con ProbIoU (verificado en el código), así que 0.939/0.817 **no son comparables** con DOTA/MMRotate sin un evaluador común de IoU poligonal.
+- **YOLO11 ya no es el último de su familia** (YOLOv12, YOLO26): un revisor pedirá compararlos.
+- **Pendiente manual:** cuartiles SJR (SCImago bloqueó el acceso automático), APC y tiempos; el dataset del MTC solo tiene notas de prensa (no hay referencia citable ni licencia confirmada).
 
 ## Etapa 5: plan de mejora para Q3+
 - [M] Escalado con test fijo común, 5+ semillas, media e IC, curva hasta 3 000+.

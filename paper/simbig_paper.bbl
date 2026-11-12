@@ -3,6 +3,24 @@
 \providecommand{\urlprefix}{URL }
 \providecommand{\doi}[1]{https://doi.org/#1}
 
+\bibitem{alqahtani2024edgebench}
+Alqahtani, D.K., Cheema, M.A., Rodriguez, M.A., Toosi, A.N.: A comprehensive
+  evaluation of deep learning object detection models on heterogeneous edge
+  devices (2024), \url{https://arxiv.org/abs/2409.16808}
+
+\bibitem{benoitcattin2020thermal}
+Benoit-Cattin, T., Velasco-Montero, D., Fern{\'a}ndez-Berni, J.: Impact of
+  thermal throttling on long-term visual inference in a {CPU}-based edge
+  device. Electronics  \textbf{9}(12), ~2106 (2020).
+  \doi{10.3390/electronics9122106}, \url{https://arxiv.org/abs/2010.06291}
+
+\bibitem{bouthillier2021variance}
+Bouthillier, X., Delaunay, P., Bronzi, M., Trofimov, A., Nichyporuk, B., Szeto,
+  J., Sepah, N., Raff, E., Madan, K., Voleti, V., Kahou, S.E., Michalski, V.,
+  Serdyuk, D., Arbel, T., Pal, C., Varoquaux, G., Vincent, P.: Accounting for
+  variance in machine learning benchmarks. In: Proceedings of Machine Learning
+  and Systems (MLSys). vol.~3 (2021), \url{https://arxiv.org/abs/2103.03098}
+
 \bibitem{ding2019roitransformer}
 Ding, J., Xue, N., Long, Y., Xia, G.S., Lu, Q.: Learning {RoI} transformer for
   oriented object detection in aerial images. In: Proceedings of the IEEE/CVF
@@ -15,11 +33,42 @@ Ding, J., Xue, N., Xia, G.S., Bai, X., Yang, W., Yang, M.Y., Belongie, S., Luo,
   and Machine Intelligence  \textbf{44}(11),  7778--7796 (2022).
   \doi{10.1109/TPAMI.2021.3117983}
 
+\bibitem{figueiredo2024leakage}
+Figueiredo, R.B.D., Mendes, H.A.: Analyzing information leakage on video object
+  detection datasets by splitting images into clusters with high spatiotemporal
+  correlation. IEEE Access  \textbf{12},  47646--47655 (2024).
+  \doi{10.1109/ACCESS.2024.3383047}
+
+\bibitem{jocher2026yolo26}
+Jocher, G., Qiu, J., Liu, M., Lyu, S., Akyon, F.C., Kalfaoglu, M.E.:
+  Ultralytics {YOLO26}: Unified real-time end-to-end vision models (2026),
+  \url{https://arxiv.org/abs/2606.03748}
+
+\bibitem{lepin2026utuav}
+Lepin, F., Velastin, S.A., Le{\'o}n, R., Garc{\'i}a-Herrero, J.,
+  Rojas-Mart{\'i}nez, G., Espinosa-Oviedo, J.E.: {UTUAV}: A drone dataset for
+  urban traffic analysis. Drones  \textbf{10}(1), ~15 (2026).
+  \doi{10.3390/drones10010015}
+
+\bibitem{lin2022orientedyolov4}
+Lin, T.H., Su, C.W.: Oriented vehicle detection in aerial images based on
+  {YOLOv4}. Sensors  \textbf{22}(21), ~8394 (2022). \doi{10.3390/s22218394}
+
 \bibitem{lin2014coco}
 Lin, T.Y., Maire, M., Belongie, S., Hays, J., Perona, P., Ramanan, D.,
   Doll{\'a}r, P., Zitnick, C.L.: Microsoft coco: Common objects in context. In:
   European Conference on Computer Vision. pp. 740--755 (2014).
   \doi{10.1007/978-3-319-10602-1_48}
+
+\bibitem{llerena2021probiou}
+Llerena, J.M., Zeni, L.F., Kirsten, L.N., Jung, C.: Gaussian bounding boxes and
+  probabilistic intersection-over-union for object detection (2021),
+  \url{https://arxiv.org/abs/2106.06072}, arXiv journal reference: IEEE
+  Transactions on Image Processing, vol. 33, pp. 671--681, 2024
+
+\bibitem{lyu2022rtmdet}
+Lyu, C., Zhang, W., et~al.: {RTMDet}: An empirical study of designing real-time
+  object detectors (2022), \url{https://arxiv.org/abs/2212.07784}
 
 \bibitem{mtcsmartchallenge}
 {Ministerio de Transportes y Comunicaciones del Per\'u}: {MTC SMART Challenge:
@@ -27,10 +76,23 @@ Lin, T.Y., Maire, M., Belongie, S., Hays, J., Perona, P., Ramanan, D.,
   \url{https://www.kaggle.com/competitions/mtc-smart-challenge-ia-para-la-movilidad-del-peru/data},
   kaggle competition data page. Accessed: 2026-07-19
 
+\bibitem{ramossanchez2026jetsonlima}
+Ramos-Sanchez, S., Lezama, J., Yauri, R., Zevallos, J.: Object detection on
+  road: Vehicle's detection based on re-training models on {NVIDIA-Jetson}
+  platform. Journal of Imaging  \textbf{12}(1), ~20 (2026).
+  \doi{10.3390/jimaging12010020}
+
 \bibitem{redmon2016yolo}
 Redmon, J., Divvala, S., Girshick, R., Farhadi, A.: You only look once:
   Unified, real-time object detection. In: Proceedings of the IEEE Conference
   on Computer Vision and Pattern Recognition. pp. 779--788 (2016)
+
+\bibitem{rey2025yoloedgedrone}
+Rey, L., Bernardos, A.M., Dobrzycki, A.D., Carrami{\~n}ana, D., Bergesio, L.,
+  Besada, J.A., Casar, J.R.: A performance analysis of you only look once
+  models for deployment on constrained computational edge devices in drone
+  applications. Electronics  \textbf{14}(3), ~638 (2025).
+  \doi{10.3390/electronics14030638}, \url{https://arxiv.org/abs/2502.15737}
 
 \bibitem{santos2024edge}
 Santos, R.C.d.M., Silva, M.C., Oliveira, R.A.R.: Real-time object detection
@@ -42,6 +104,10 @@ Santos, R.C.d.M., Silva, M.C., Oliveira, R.A.R.: Real-time object detection
 {Tencent}: {NCNN}: High-performance neural network inference framework.
   \url{https://github.com/Tencent/ncnn}, accessed: 2026-07-14
 
+\bibitem{tian2025yolov12}
+Tian, Y., Ye, Q., Doermann, D.: {YOLOv12}: Attention-centric real-time object
+  detectors (2025), \url{https://arxiv.org/abs/2502.12524}
+
 \bibitem{ultralytics_obb}
 {Ultralytics}: Oriented bounding boxes object detection.
   \url{https://docs.ultralytics.com/tasks/obb/}, accessed: 2026-07-14
@@ -49,6 +115,12 @@ Santos, R.C.d.M., Silva, M.C., Oliveira, R.A.R.: Real-time object detection
 \bibitem{ultralytics_yolo11}
 {Ultralytics}: {YOLO11} model documentation.
   \url{https://docs.ultralytics.com/models/yolo11/}, accessed: 2026-07-14
+
+\bibitem{wang2025frvehicle}
+Wang, Z., Xiong, L., Yu, Z.: An asymmetric selective kernel network for
+  drone-based vehicle detection to build a high-accuracy vehicle trajectory
+  dataset. Remote Sensing  \textbf{17}(3), ~407 (2025).
+  \doi{10.3390/rs17030407}
 
 \bibitem{wen2015uadetrac}
 Wen, L., Du, D., Cai, Z., Lei, Z., Chang, M.C., Qi, H., Lim, J., Yang, M.H.,
@@ -72,6 +144,19 @@ Yang, X., Yan, J., Feng, Z., He, T.: {R3Det}: Refined single-stage detector
   with feature refinement for rotating object. In: Proceedings of the AAAI
   Conference on Artificial Intelligence. vol.~35, pp. 3163--3171 (2021).
   \doi{10.1609/aaai.v35i4.16426}
+
+\bibitem{yang2021gwd}
+Yang, X., Yan, J., Ming, Q., Wang, W., Zhang, X., Tian, Q.: Rethinking rotated
+  object detection with {G}aussian {W}asserstein distance loss. In: Proceedings
+  of the 38th International Conference on Machine Learning (ICML). Proceedings
+  of Machine Learning Research, vol.~139, pp. 11830--11841 (2021),
+  \url{https://arxiv.org/abs/2101.11952}
+
+\bibitem{yang2021kld}
+Yang, X., Yang, X., Yang, J., Ming, Q., Wang, W., Tian, Q., Yan, J.: Learning
+  high-precision bounding box for rotated object detection via
+  {K}ullback-{L}eibler divergence. In: Advances in Neural Information
+  Processing Systems (NeurIPS) (2021), \url{https://arxiv.org/abs/2106.01883}
 
 \bibitem{yu2020bdd100k}
 Yu, F., Chen, H., Wang, X., Xian, W., Chen, Y., Liu, F., Madhavan, V., Darrell,
