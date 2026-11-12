@@ -1,0 +1,78 @@
+[project]
+site_name = "swole-yolo"
+site_description = "Detección vehicular orientada con YOLO11n-OBB en tráfico peruano: guía de aprendizaje y documentación del proyecto."
+site_author = "Equipo swole-yolo (UNSA)"
+docs_dir = "docs"
+site_dir = "site"
+extra_javascript = [
+  "javascripts/mathjax.js",
+  "https://unpkg.com/mathjax@3.2.2/es5/tex-mml-chtml.js",
+]
+
+nav = [
+  { "Inicio" = "index.md" },
+  { "Guía de aprendizaje" = [
+    { "Cómo usar esta guía" = "guia/index.md" },
+    { "1. Fundamentos de ML y visión" = "guia/01-fundamentos.md" },
+    { "2. Detección de objetos" = "guia/02-deteccion-objetos.md" },
+    { "3. Métricas de evaluación" = "guia/03-metricas.md" },
+    { "4. Cajas orientadas (OBB)" = "guia/04-cajas-orientadas.md" },
+    { "5. YOLO11 y transfer learning" = "guia/05-yolo11.md" },
+    { "6. Datos, splits y fuga" = "guia/06-datos.md" },
+    { "7. Inferencia en el borde" = "guia/07-edge.md" },
+    { "8. Metodología experimental" = "guia/08-metodologia.md" },
+    { "Glosario" = "guia/glosario.md" },
+  ] },
+  { "El proyecto" = [
+    { "Arquitectura del código" = "proyecto/arquitectura.md" },
+    { "Reproducir los resultados" = "proyecto/reproduccion.md" },
+    { "Resultados y lectura crítica" = "proyecto/resultados.md" },
+    { "Plan de revisión del paper" = "PLAN.md" },
+  ] },
+]
+
+[project.theme]
+language = "es"
+features = [
+  "content.code.copy",
+  "content.tabs.link",
+  "navigation.indexes",
+  "navigation.instant",
+  "navigation.path",
+  "navigation.sections",
+  "navigation.top",
+  "navigation.footer",
+  "search.highlight",
+  "toc.follow",
+]
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: light)"
+scheme = "default"
+toggle.icon = "lucide/sun"
+toggle.name = "Cambiar a modo oscuro"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: dark)"
+scheme = "slate"
+toggle.icon = "lucide/moon"
+toggle.name = "Cambiar a modo claro"
+
+[project.markdown_extensions]
+abbr = {}
+admonition = {}
+attr_list = {}
+def_list = {}
+footnotes = {}
+md_in_html = {}
+tables = {}
+toc.permalink = true
+pymdownx.arithmatex.generic = true
+pymdownx.details = {}
+pymdownx.highlight = {}
+pymdownx.inlinehilite = {}
+pymdownx.superfences.custom_fences = [
+  { name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format" },
+]
+pymdownx.tabbed.alternate_style = true
+pymdownx.tasklist.custom_checkbox = true
