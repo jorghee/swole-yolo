@@ -91,7 +91,7 @@ Una forma práctica de revisar un artículo: tabular cada afirmación y pregunta
 | "3.33 FPS en Pi 4 (544 px) y 2.50 (640 px)" | **Plausible, no auditable** | el script se perdió; falta versión de NCNN y governor; 90–120 s |
 | "No se observó throttling" | **Limitada** | flag final 0x0, pero la temperatura seguía subiendo |
 | Motivación: "vistas oblicuas/cámaras elevadas" | **Incorrecta** | las imágenes son cenitales de dron |
-| Figs. 2 y 3 como resultados finales | **Metodológicamente débil** | usan validación, no test |
+| Figs. 2 y 3 como resultados finales | **Era débil; corregido** | usaban validación; ahora se generan sobre test |
 
 ## 8.8 Reproducibilidad
 

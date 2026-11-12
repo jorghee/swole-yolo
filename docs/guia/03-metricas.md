@@ -100,7 +100,7 @@ Tabla donde las columnas son la clase **real** y las filas la clase **predicha**
 Normalizada por columna, cada columna suma 1 y la lectura es "de los objetos reales de esta clase, ¿a dónde fue a parar cada fracción?".
 
 !!! tip "En nuestro proyecto"
-    En la Fig. 3 del paper (modelo de 640 px), el 17 % de las `motorcycle` reales se asignan a *background* (no se detectaron) y, leyendo la fila, gran parte de lo predicho como `motorcycle` es en realidad fondo. Recuerda el [tamaño de 4 px](01-fundamentos.md#redimensionado-resize-letterbox): es esperable.
+    En la Fig. 3 del paper revisado (modelo de 640 px, **split de test**), el 11 % de las `motorcycle` reales se asignan a *background* (no se detectaron) y el 55 % de los falsos positivos (la columna `background`) se predicen como `motorcycle`. (En la versión original, calculada sobre validación, eran 17 % y 45 %: la diferencia entre ambas muestras ilustra la variabilidad del apartado 3.7.) Recuerda el [tamaño de 4 px](01-fundamentos.md#redimensionado-resize-letterbox): es esperable.
 
 ## 3.7 Incertidumbre: una cifra sin intervalo es media verdad
 
