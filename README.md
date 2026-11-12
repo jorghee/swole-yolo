@@ -12,7 +12,7 @@ Paper asociado (`paper/`): *Fine-Tuning YOLO11n-OBB for Oriented Vehicle Detecti
 | 1 500 img · 50 ep · 544 px | 0.817 | 0.677 | idem |
 | 2 000 img · 50 ep · 544 px | 0.813 | 0.687 | idem |
 | 2 500 img · 50 ep · 544 px | 0.914 | 0.785 | idem |
-| 3 000 img · 50 ep · 544 px | 0.885 | 0.755 | idem (**no está en el paper**) |
+| 3 000 img · 50 ep · 544 px | 0.885 | 0.755 | idem |
 | 2 500 img · 70 ep · 640 px | 0.939 | 0.817 | `results/finetune_70ep_640px/` |
 
 Cada tamaño usa su propio split de test (por clips). Latencia en Pi 4 (NCNN): 300 ms (544 px) y 400 ms (640 px); ver `results/pi_original_lost_script/`.

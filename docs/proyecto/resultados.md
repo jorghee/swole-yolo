@@ -13,8 +13,8 @@ Todas las cifras de esta página provienen de `results/` y fueron **verificadas*
 | 3 000 · 50 ép · 544 | 2 098 / 450 / 452 | 0.885 | 0.755 | 0.854 | 0.833 | 0.895 | −0.010 |
 | 2 500 · 70 ép · 640 | 1 748 / 376 / 376 | **0.939** | **0.817** | 0.928 | 0.860 | 0.919 | +0.020 |
 
-!!! warning "La fila de 3 000 no aparece en el paper"
-    Se entrenó y evaluó (`results/finetune_50ep_544px/result_dataset_3000.json`), pero el paper corta la curva en 2 500. Dar un mAP@50 menor con más datos no es un error: es información que debe reportarse y explicarse.
+!!! info "La fila de 3 000"
+    La versión enviada a SIMBig cortaba la curva en 2 500 (ver `paper/paper_guideline.md`, que ordenaba excluirla por una "distribución desproporcionada" que los datos no confirman). La versión revisada **la incluye** (Tabla 3 y Fig. 1) con su explicación: en test 3 000 queda por debajo de 2 500, pero en validación es el mejor, y cada subconjunto tiene un test distinto.
 
 ## Por clase (modelo 640 px, test; Tabla 5 del paper)
 

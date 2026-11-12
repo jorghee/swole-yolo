@@ -29,11 +29,12 @@ modest hardware. This work fine-tunes YOLO11n-OBB, an oriented object detection
 model, for nine vehicle categories in Peruvian aerial (nadir) traffic imagery.
 We build clip-level train, validation, and test partitions to prevent adjacent
 video frames from appearing in different splits. A data-size study trains on
-subsets of 1,000, 1,500, 2,000, and 2,500 images with the same 50-epoch protocol
-and an effective input size of 544 pixels; each subset has its own test
-partition. Test mAP@50 rises from 66.2\% to 91.4\% (mAP@50--95 from 54.8\% to
-78.5\%), but because the partitions differ and a single seed is used, differences
-of a few points are not conclusive. On the 2,500-image subset, a second
+subsets of 1,000, 1,500, 2,000, 2,500, and 3,000 images with the same 50-epoch
+protocol and an effective input size of 544 pixels; each subset has its own test
+partition. Test mAP@50 rises from 66.2\% with 1,000 images to 91.4\% with 2,500
+and then falls to 88.5\% with 3,000, while validation mAP@50 is highest at 3,000.
+Because the partitions differ and a single seed is used, differences of a few
+points are not conclusive. On the 2,500-image subset, a second
 configuration trained for 70 epochs at 640 pixels reaches 93.9\% mAP@50 and
 81.7\% mAP@50--95 with 2.66 million parameters; it changes resolution and
 epochs together. For edge AI deployment, a Raspberry Pi 4 Model B (8~GB RAM)
@@ -78,7 +79,7 @@ contributions:
 \begin{itemize}
 \item A reproducible conversion and clip-level splitting protocol for nine
 vehicle categories from Peruvian aerial traffic videos.
-\item A data-size study from 1,000 to 2,500 images under a fixed 50-epoch
+\item A data-size study from 1,000 to 3,000 images under a fixed 50-epoch
 training protocol, with its limitations stated explicitly.
 \item A higher-resolution 2,500-image configuration that attains 93.9\%
 mAP@50 and 81.7\% mAP@50--95 with 2.66 million parameters.
@@ -170,7 +171,7 @@ Subsets are formed by allocating a quota to each source video and selecting
 temporally separated frames within that video. The subsets are nested: each
 larger subset contains the smaller ones. The 1,000-image subset contains one
 frame from each of 1,000 clips, whereas the larger subsets draw on the same
-1,088 clips (on average 1.4 to 2.3 frames per clip), so increasing the subset
+1,088 clips (on average 1.4 to 2.8 frames per clip), so increasing the subset
 size mostly adds frames of scenes that are already represented rather than new
 scenes. Images are grouped by clip identifier, and whole clips, rather than
 individual frames, are assigned to train, validation, or test. This prevents
@@ -190,6 +191,7 @@ Subset & Train & Validation & Test & Total \\
 1,500 & 1,050 & 225 & 225 & 1,500 \\
 2,000 & 1,400 & 300 & 300 & 2,000 \\
 2,500 & 1,748 & 376 & 376 & 2,500 \\
+3,000 & 2,098 & 450 & 452 & 3,000 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -272,35 +274,43 @@ carry no information beyond measurement noise.
 
 \subsection{Data Size Under a Fixed Training Protocol}
 
-Table~\ref{tab:scaling} presents the data-size results. The strongest result in
-this family is obtained with 2,500 images: 91.4\% mAP@50 and 78.5\%
-mAP@50--95. Relative to 1,000 images, this is a gain of 25.2 and 23.6
-percentage points, respectively. The gain is not strictly monotonic at every
-intermediate point: mAP@50 is slightly lower at 2,000 than at 1,500 images.
-Because each subset is evaluated on a clip-level test split of its own, rows of
+Table~\ref{tab:scaling} presents the data-size results. Test mAP@50 increases
+from 66.2\% with 1,000 images to 91.4\% with 2,500 images (78.5\% mAP@50--95),
+a gain of 25.2 and 23.6 percentage points, respectively, but the trend is not
+monotonic: mAP@50 is slightly lower at 2,000 than at 1,500 images (0.813 vs.
+0.817) and clearly lower at 3,000 images (0.885) than at 2,500. Because each
+subset is evaluated on a clip-level test split of its own, rows of
 Table~\ref{tab:scaling} mix the effect of training-set size with differences in
-the test sample. To gauge the size of that variation, the 2,500-image
-checkpoint reaches 0.860 mAP@50 on its validation split and 0.914 on its test
-split, both with 376 images; differences of a few points between partitions
-therefore lie within sampling variation, and the trend should be read as
-indicative rather than conclusive.
+the test sample, so the 3,000-image result cannot be read as a degradation
+caused by additional data. Two observations support this reading. First, the
+validation mAP@50 of the selected checkpoints, measured on yet another sample of
+each subset, ranks the sizes differently: it is highest at 3,000 images (0.895)
+and lower at 2,500 (0.860). Validation was used to select the checkpoint, so
+these values are mildly optimistic. Second, the 2,500-image checkpoint reaches
+0.860 on its validation split and 0.914 on its test split, both with 376 images.
+Differences of a few points between partitions thus lie within sampling
+variation, and the trend should be read as indicative rather than conclusive.
 
 \begin{table}
-\caption{Test performance for the data-size experiment. All rows use
+\caption{Performance for the data-size experiment. All rows use
 YOLO11n-OBB, 50 epochs, batch size 32, a 544-pixel effective input size, a
-single run, and the subset's own clip-level test split.}
+single run, and the subset's own clip-level partitions. Validation mAP@50 is
+that of the selected checkpoint.}
 \label{tab:scaling}
 \centering
-\small
-\begin{tabular}{rrrrrr}
+\footnotesize
+\begin{tabular}{rrrrrrr}
 \toprule
-Images & Test images & mAP@50 & mAP@50--95 & Precision & Recall \\
+ & Test & Val. & \multicolumn{4}{c}{Test} \\
+\cmidrule(lr){4-7}
+Images & images & mAP@50 & mAP@50 & mAP@50--95 & Precision & Recall \\
 \midrule
-1,000 & 150 & 0.6622 & 0.5483 & 0.7742 & 0.6425 \\
-1,500 & 225 & 0.8167 & 0.6769 & 0.8352 & 0.7058 \\
-2,000 & 300 & 0.8129 & 0.6873 & 0.8616 & 0.7219 \\
-2,500 & 376 & \textbf{0.9140} & \textbf{0.7847} & \textbf{0.9053} &
+1,000 & 150 & 0.7037 & 0.6622 & 0.5483 & 0.7742 & 0.6425 \\
+1,500 & 225 & 0.8236 & 0.8167 & 0.6769 & 0.8352 & 0.7058 \\
+2,000 & 300 & 0.8727 & 0.8129 & 0.6873 & 0.8616 & 0.7219 \\
+2,500 & 376 & 0.8601 & \textbf{0.9140} & \textbf{0.7847} & \textbf{0.9053} &
 \textbf{0.8517} \\
+3,000 & 452 & 0.8947 & 0.8848 & 0.7546 & 0.8540 & 0.8333 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -308,22 +318,22 @@ Images & Test images & mAP@50 & mAP@50--95 & Precision & Recall \\
 \begin{figure}
 \centering
 \includegraphics[width=0.75\textwidth]{fig_scaling.pdf}
-\caption{Test mAP@50 and mAP@50--95 as a function of training-set size, under
-the fixed 50-epoch, 544-pixel effective-input protocol of
-Table~\ref{tab:scaling}. Each point uses its own clip-level test split and a
+\caption{Test mAP@50 and mAP@50--95, and validation mAP@50, as a function of
+training-set size, under the fixed 50-epoch, 544-pixel effective-input protocol
+of Table~\ref{tab:scaling}. Each point uses its own clip-level partitions and a
 single run.}
 \label{fig:scaling}
 \end{figure}
 
-Figure~\ref{fig:scaling} visualizes the trend of Table~\ref{tab:scaling}: both
-metrics increase overall with more training data, with the small dip at
-2,000 images visible as a plateau rather than a reversal. Given the variation
-discussed above, the dip should not be over-interpreted.
+Figure~\ref{fig:scaling} visualizes the trend of Table~\ref{tab:scaling}: test
+metrics rise overall up to 2,500 images and drop at 3,000, whereas validation
+mAP@50 is highest at 3,000 images. The dips at 2,000 and 3,000 images should not be
+over-interpreted given the variation discussed above.
 
 \subsection{Candidate Configuration at 640 Pixels}
 
 The 70-epoch, 640-pixel configuration is a candidate for edge deployment. It
-uses the same 2,500-image subset as the last row of Table~\ref{tab:scaling},
+uses the same 2,500-image subset as the corresponding row of Table~\ref{tab:scaling},
 but changes both the number of epochs and the resolution. It therefore compares
 complete configurations rather than isolating either factor. In addition, the
 50-epoch checkpoints were selected at epochs 43--50 of 50, so validation
@@ -473,7 +483,10 @@ and energy consumption.
 \section{Discussion and Limitations}
 
 The results suggest that a few thousand domain-specific images are enough to
-reach strong held-out accuracy for the present domain. However, the data-size
+reach strong held-out accuracy for the present domain. Because the
+3,000-image subset scores lower than the 2,500-image one on test but higher on
+validation, we cannot say whether more data helped beyond 2,500 images. The
+data-size
 experiment does not estimate uncertainty across random partitions: each data
 size has a different clip-level test set and a single training run, and the
 larger subsets add frames from the same clips rather than new scenes. A
@@ -516,9 +529,9 @@ tracking for vehicle counting and trajectory analysis.
 
 We presented a clip-level evaluation of YOLO11n-OBB for oriented vehicle
 detection in Peruvian aerial traffic imagery and an on-device NCNN benchmark on
-Raspberry Pi. Under a fixed 50-epoch protocol, increasing the subset from 1,000
-to 2,500 images raised test mAP@50 from 66.2\% to 91.4\%, with each subset
-evaluated on its own test partition and a single run, so the trend is
+Raspberry Pi. Under a fixed 50-epoch protocol, test mAP@50 rose from 66.2\% with
+1,000 images to 91.4\% with 2,500 and fell to 88.5\% with 3,000, with each
+subset evaluated on its own test partition and a single run, so the trend is
 indicative rather than conclusive. A 70-epoch, 640-pixel configuration reached
 93.9\% mAP@50 and 81.7\% mAP@50--95 with 2.66 million parameters. On the
 Raspberry Pi, the 2,500-image 544-pixel model achieved 3.33 FPS, whereas the
