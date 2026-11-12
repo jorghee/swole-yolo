@@ -15,6 +15,17 @@ Paper:
 6. El script del benchmark en la Raspberry Pi no está en el repo; faltan versión de NCNN, hilos y governor de CPU.
 7. Sin baselines, sin comparación entre arquitecturas ni entre hardware; sin cuantificación (conteo).
 
+Hallazgos añadidos durante la Etapa 2 (medidos sobre los datos y checkpoints reales):
+
+8. **Subconjuntos anidados** (1000 ⊂ 1500 ⊂ … ⊂ 3000) y, de 1500 en adelante, con los **mismos 1 088 clips**: "escalar datos" solo añade frames de las mismas escenas.
+9. **Los modelos de 50 épocas no habían convergido**: mejor checkpoint en las épocas 43–50 (y 60 de 70). Agrava el confusor 544/50 vs 640/70.
+10. **Ruido de test cuantificado:** mismo modelo, mAP@50 val 0.860 vs test 0.914 (+5.4 pts) en el subconjunto de 2 500; diferencias test − val entre −6.0 y +5.4 pts.
+11. **61 % de las cajas tienen ángulo 0° y 81 % están a ≤ 2° de un eje**; solo 6.9 % se desvía más de 10°. El valor de OBB frente a HBB no está demostrado.
+12. **Objetos diminutos:** a 544 px un auto mide ≈ 10 px y una moto ≈ 3.6 px de lado corto; explica `motorcycle` = 0.749.
+13. Las imágenes son **vistas cenitales (nadir) de dron**; el paper dice "oblicuas / cámaras elevadas".
+14. `degrees=0` (sin rotación como aumento), `optimizer=auto` sin confirmar, sin log de entrenamiento.
+15. La Tabla 3 (FPS de escritorio) varía 6 % entre modelos idénticos: es ruido; responde la pregunta del revisor 2 ("¿por qué varía el FPS?").
+
 Repo:
 - Tres carpetas "pytorch" (`main/pytorch_implementation`, `main/pytorch-implementation`, `pytorch-implementation`), dos `particionar.py` distintos, `main/tensorflow_implementation` vacía.
 - El script que generó los resultados es `finetune/messi.py`; su lanzador `messi.sh` llama a `finetune_yolo_obb.py`, que no existe.
@@ -23,19 +34,20 @@ Repo:
 - `data/dataset_2500/images` tiene 2515 jpg para 2500 filas en el CSV (15 imágenes sobrantes por aclarar).
 
 ## Etapa 0: línea base reproducible
-- [ ] Rama creada, versiones del entorno registradas (Ultralytics, torch, ncnn).
-- [ ] Re-evaluar los checkpoints existentes y confirmar las Tablas 3-5.
-- [ ] Recuperar el script del benchmark de la Raspberry Pi.
-- Hecho cuando: un comando reproduce las tablas del paper.
+- [x] Rama creada, versiones del entorno registradas (Ultralytics 8.4.211, torch 2.15, ncnn 1.0.20261020).
+- [x] Re-evaluar los checkpoints existentes y confirmar las Tablas 3-4 (dif. máx. 0.0008). Tabla 5 (AP por clase) pendiente de verificar.
+- [x] Script del benchmark de la Pi: perdido; reescrito como `scripts/bench_pi.py`. **Pendiente: correrlo en la Pi.**
+- Hecho cuando: un comando reproduce las tablas del paper (`scripts/repro_baseline.py`).
 
-## Etapa 1: ordenar el repo
+## Etapa 1: ordenar el repo  ✅ (commit `e605d7f`)
 - Estructura: `src/swole_yolo/` (convert, split, train, evaluate, bench_pi), `configs/`, `scripts/`, `results/`, `paper/`, `docs/`, `archive/`.
 - Un solo proyecto `uv` con `pyproject.toml`; fusionar los `particionar.py`; renombrar `messi.py`.
 - Sacar pesos y `__pycache__` de git (Releases o DVC). Reescribir el historial queda como decisión aparte (afecta a los 4 coautores).
 - README nuevo con el flujo completo.
 - Hecho cuando: la Etapa 0 da los mismos números con el código nuevo.
 
-## Etapa 2: guía principiante a experto + docs en Zensical
+## Etapa 2: guía principiante a experto + docs en Zensical  ✅
+Sitio en `docs/` (config `zensical.toml`); 8 capítulos + glosario + 3 páginas del proyecto.
 Imágenes y redes → detección (IoU, NMS, anchor-free) → métricas (P, R, AP, mAP, matriz de confusión) → OBB (parametrización, ecuación 1, DOTA) → YOLO11 y transfer learning → datos (fuga entre frames, split por clip, desbalance) → edge (ONNX, NCNN, latencia vs throughput, P95, throttling, cuantización) → diseño de experimentos y lectura de papers. Cada tema enlaza al código donde aparece.
 
 ## Etapa 3: afinar el paper actual
