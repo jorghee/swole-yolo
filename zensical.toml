@@ -29,6 +29,7 @@ nav = [
   ] },
   { "Literatura" = [
     { "Revisión de literatura" = "literatura/revision.md" },
+    { "Ecuaciones de búsqueda" = "literatura/ecuaciones_busqueda.md" },
     { "Revistas candidatas" = "literatura/revistas.md" },
     { "Fuentes no verificadas" = "literatura/no_verificado.md" },
   ] },
