@@ -1,5 +1,16 @@
 # Borrador y guía de resultados — YOLO11n-OBB para tráfico peruano
 
+> **Documento de apoyo histórico.** El manuscrito vigente, con autores y
+> resultados medidos en Raspberry Pi, está en `simbig_paper.tex`. Esta guía se
+> conserva como registro de decisiones y de resultados previos.
+
+> **Actualización (revisión posterior al rechazo de SIMBig).** La instrucción de
+> excluir el subconjunto de 3000 imágenes que aparece más abajo fue **revocada**:
+> el manuscrito revisado lo incluye (Tablas 1 y 3, Fig. 1). La razón original
+> ("distribución desproporcionada") no se confirmó al medir las proporciones por
+> clase, que son prácticamente iguales a las de los demás tamaños. Ver
+> `docs/PLAN.md`.
+
 > **Estado del documento (14 de julio de 2026).** Este archivo contiene texto
 > listo para adaptar a la plantilla LNCS y resultados ya medidos en el conjunto
 > de prueba. Las mediciones en Raspberry Pi siguen pendientes y aparecen como
